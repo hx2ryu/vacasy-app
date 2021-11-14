@@ -11,6 +11,7 @@ const ICONS: Record<IconType, ImageSourcePropType> = {
 
 const COLORS = {
   white: '#f8f9fa',
+  primary: '#fff9db',
   grayscale: {
     100: '#f1f3f5',
     200: '#e9ecef',
