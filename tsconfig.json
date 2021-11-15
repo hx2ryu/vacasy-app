@@ -54,6 +54,12 @@
       "@navigation/*": [
         "src/navigation/*"
       ],
+      "@store/*": [
+        "src/store/*"
+      ],
+      "@features/*": [
+        "src/features/*"
+      ],
       "@utils/*": [
         "src/utils/*"
       ],
