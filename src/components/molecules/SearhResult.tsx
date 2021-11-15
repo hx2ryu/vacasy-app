@@ -27,8 +27,8 @@ const SearhResult: React.FC<Props> = ({content, ...props}) => {
   );
 };
 
+export default SearhResult;
+
 const styles = StyleSheet.create({
   root: {backgroundColor: 'green'},
 });
-
-export default SearhResult;

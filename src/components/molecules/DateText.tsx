@@ -23,10 +23,10 @@ const DateText: React.FC<Props> = ({inputDate}) => {
   );
 };
 
+export default DateText;
+
 const styles = StyleSheet.create({
   root: {flexDirection: 'row', alignItems: 'flex-end'},
   date: {fontSize: 48, lineHeight: 60},
   monthAndYear: {marginBottom: 8},
 });
-
-export default DateText;

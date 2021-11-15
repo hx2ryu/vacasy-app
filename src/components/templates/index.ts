@@ -1,3 +1,3 @@
 import HomeTemplate from './HomeTemplate';
-
-export {HomeTemplate};
+import SearchTemplate from './SearchTemplate';
+export {HomeTemplate, SearchTemplate};

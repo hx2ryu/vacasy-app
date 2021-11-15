@@ -2,8 +2,9 @@ import React from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootParamList} from './types';
-import {HomePage} from '@components/pages';
+import {HomePage, SearchPage} from '@components/pages';
 import {COLORS} from '@/constants/theme';
+import {BasicNavigationBar} from '../molecules';
 
 const Theme = {
   ...DefaultTheme,
@@ -21,6 +22,25 @@ const RootNavigator: React.FC = () => (
         headerShown: false,
       }}>
       <Stack.Screen name="Home" component={HomePage} />
+      <Stack.Screen
+        name="Search"
+        component={SearchPage}
+        options={{
+          headerShown: true,
+          header: props => (
+            <BasicNavigationBar
+              {...props}
+              style={{
+                marginTop: 500,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                backgroundColor: COLORS.grayscale[600],
+              }}
+            />
+          ),
+          presentation: 'containedTransparentModal',
+        }}
+      />
     </Stack.Navigator>
   </NavigationContainer>
 );

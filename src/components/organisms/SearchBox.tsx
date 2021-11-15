@@ -1,20 +1,28 @@
-import {COLORS, FONTS} from '@/constants/theme';
+import {COLORS, FONTS, ICONS} from '@/constants/theme';
+import {Word} from '@/features/wordbook/slice';
 import React, {useState} from 'react';
 import {
   FlatList,
-  ListRenderItem,
-  ListRenderItemInfo,
+  Image,
   StyleSheet,
   TextInputProps,
   View,
+  ViewStyle,
 } from 'react-native';
 import {TextInput} from '../atoms';
 import {SearhResult} from '../molecules';
 
 interface Props extends TextInputProps {
   searchResult: Array<string>;
+  containerStyle?: ViewStyle;
+  onAddWord: (word: Word) => void;
 }
-const SearchBox: React.FC<Props> = ({searchResult, ...props}) => {
+const SearchBox: React.FC<Props> = ({
+  searchResult,
+  containerStyle,
+  onAddWord,
+  ...props
+}) => {
   const [showResult, setShowResult] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>('');
 
@@ -23,15 +31,23 @@ const SearchBox: React.FC<Props> = ({searchResult, ...props}) => {
   };
 
   return (
-    <View style={styles.root}>
-      <TextInput
-        {...props}
-        onChangeText={onChangeSearchText}
-        onSubmitEditing={() => {
-          setShowResult(true);
-        }}
-        style={styles.textInput}
-      />
+    <View style={[styles.root, containerStyle]}>
+      <View style={styles.textInputWrapper}>
+        <Image source={ICONS.search} style={styles.searchIcon} />
+        <TextInput
+          {...props}
+          placeholderTextColor={COLORS.grayscale[400]}
+          onChangeText={onChangeSearchText}
+          onSubmitEditing={() => {
+            // setShowResult(true);
+            onAddWord({
+              word: searchText,
+              description: `description: ${searchText}`,
+            });
+          }}
+          style={styles.textInput}
+        />
+      </View>
       {showResult && (
         <FlatList
           style={{backgroundColor: 'blue'}}
@@ -47,13 +63,20 @@ const SearchBox: React.FC<Props> = ({searchResult, ...props}) => {
 
 const styles = StyleSheet.create({
   root: {
-    height: 500,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  textInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchIcon: {
+    tintColor: 'white',
+  },
   textInput: {
     ...FONTS.h2,
-    color: COLORS.grayscale[500],
+    color: 'white',
+    marginLeft: 10,
   },
 });
 

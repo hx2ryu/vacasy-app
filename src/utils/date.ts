@@ -4,7 +4,6 @@ export function getDateString(date: Date) {
     month: getMonth(date),
     date: date.getDate(),
   };
-//   return `${date.getDate()}, ${getMonth(date)} ${date.getFullYear()}`;
 }
 
 export function getTime(date: Date) {

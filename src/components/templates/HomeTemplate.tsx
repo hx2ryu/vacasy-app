@@ -1,35 +1,89 @@
-import {DEVICE_SIZE} from '@/constants/theme';
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import Animated from 'react-native-reanimated';
+import {COLORS, DEVICE_SIZE} from '@/constants/theme';
+import {Word} from '@/features/wordbook/slice';
+import React, {useRef} from 'react';
+import {FlatList, Animated, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {DateText, MainMenuBox} from '../molecules';
-import SearchBox from '../organisms/SearchBox';
+import {
+  DateText,
+  HorizontalScrollIndicator,
+  MainMenuBox,
+  WordCard,
+} from '../molecules';
+import {Wordbook} from '../organisms';
 
-const HomeTemplate: React.FC = () => {
+type Props = {
+  list: Array<Word>;
+  onAddWord: (word: Word) => void;
+  onPressSearchButton: () => void;
+};
+const HomeTemplate: React.FC<Props> = ({
+  list,
+  onPressSearchButton,
+  onAddWord,
+}) => {
   const {top, bottom} = useSafeAreaInsets();
-  const [showSearchBox, setShowSearchBox] = useState<boolean>(false);
+  const scrollX = useRef(new Animated.Value(0)).current;
 
   return (
-    <View>
-      <View style={styles.fixedView}>
-        <DateText inputDate={new Date()} />
-        <MainMenuBox style={[styles.bottomMenu, {marginBottom: bottom + 32}]} />
-      </View>
+    <View style={[styles.root, {marginTop: top, marginBottom: bottom}]}>
+      <DateText inputDate={new Date()} />
 
       <Animated.ScrollView
+        onScroll={Animated.event(
+          [
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: scrollX,
+                },
+              },
+            },
+          ],
+          {useNativeDriver: false},
+        )}
         horizontal
         scrollEnabled
+        pagingEnabled
         showsHorizontalScrollIndicator={false}
-        style={[styles.root, {top, bottom}]}>
-        {showSearchBox && (
-          <SearchBox
-            autoFocus
-            placeholder={'search a word.'}
-            searchResult={[]}
-          />
-        )}
+        style={styles.scrollView}>
+        <Wordbook wordList={list} />
+
+        <View
+          style={{
+            padding: 16,
+            width: DEVICE_SIZE.width - 32,
+            backgroundColor: 'green',
+          }}
+        />
+        <View
+          style={{
+            padding: 16,
+            width: DEVICE_SIZE.width - 32,
+            backgroundColor: 'yellow',
+          }}
+        />
+        <View
+          style={{
+            padding: 16,
+            width: DEVICE_SIZE.width - 32,
+            backgroundColor: 'orange',
+          }}
+        />
+        <View
+          style={{
+            padding: 16,
+            width: DEVICE_SIZE.width - 32,
+            backgroundColor: 'yellow',
+          }}
+        />
       </Animated.ScrollView>
+
+      <HorizontalScrollIndicator scrollX={scrollX} pageCount={4} />
+
+      <MainMenuBox
+        style={styles.bottomMenu}
+        onPressSearchButton={onPressSearchButton}
+      />
     </View>
   );
 };
@@ -37,21 +91,13 @@ const HomeTemplate: React.FC = () => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    // justifyContent: 'space-between',
     padding: 16,
-  },
-  fixedView: {
-    zIndex: 1,
-    flex: 1,
-    position: 'absolute',
-    // bottom: 16,
-    width: DEVICE_SIZE.width - 32,
     justifyContent: 'space-between',
-    backgroundColor: 'green',
   },
+  scrollView: {paddingVertical: 16},
   bottomMenu: {
     justifyContent: 'flex-end',
-    // backgroundColor: 'blue',
+    alignItems: 'flex-start',
   },
 });
 
