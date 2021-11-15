@@ -6,15 +6,16 @@ import {SearchBox} from '../organisms';
 
 type Props = {
   onAddWord: (word: Word) => void;
+  wordList: Array<Word>;
 };
-const SearchTemplate: React.FC<Props> = ({onAddWord}) => {
+const SearchTemplate: React.FC<Props> = ({onAddWord, wordList}) => {
   return (
     <View style={styles.root}>
       <SearchBox
         containerStyle={styles.searchBox}
         autoFocus
         placeholder={'search your word.'}
-        searchResult={[]}
+        searchResult={wordList}
         onAddWord={onAddWord}
       />
     </View>

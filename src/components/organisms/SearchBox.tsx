@@ -9,11 +9,12 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import {Wordbook} from '.';
 import {TextInput} from '../atoms';
-import {SearhResult} from '../molecules';
+import {SearhResult, WordCard} from '../molecules';
 
 interface Props extends TextInputProps {
-  searchResult: Array<string>;
+  searchResult: Array<Word>;
   containerStyle?: ViewStyle;
   onAddWord: (word: Word) => void;
 }
@@ -39,7 +40,7 @@ const SearchBox: React.FC<Props> = ({
           placeholderTextColor={COLORS.grayscale[400]}
           onChangeText={onChangeSearchText}
           onSubmitEditing={() => {
-            // setShowResult(true);
+            setShowResult(true);
             onAddWord({
               word: searchText,
               description: `description: ${searchText}`,
@@ -49,13 +50,15 @@ const SearchBox: React.FC<Props> = ({
         />
       </View>
       {showResult && (
-        <FlatList
-          style={{backgroundColor: 'blue'}}
-          data={searchResult}
-          renderItem={({item, index}) => (
-            <SearhResult content={item} key={index} />
-          )}
-        />
+        // <FlatList
+        //   style={{backgroundColor: 'blue'}}
+        //   data={searchResult}
+        //   renderItem={({item, index}) => (
+        //     // <SearhResult content={item.} key={index} />
+        //     <WordCard />
+        //   )}
+        // />
+        <Wordbook wordList={searchResult} />
       )}
     </View>
   );
