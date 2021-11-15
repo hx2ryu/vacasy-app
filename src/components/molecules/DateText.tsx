@@ -1,4 +1,3 @@
-import {COLORS} from '@/constants/theme';
 import {getDateString} from '@/utils/date';
 import React, {useMemo} from 'react';
 import {StyleSheet, View} from 'react-native';
@@ -14,21 +13,20 @@ const DateText: React.FC<Props> = ({inputDate}) => {
 
   return (
     <View style={styles.root}>
-      <Text type={'h1'} style={styles.text}>
+      <Text type={'h1'} style={styles.date}>
         {date.date}
       </Text>
       <Text
-        type={'p'}
-        style={styles.text}>{` ${date.month}, ${date.year}`}</Text>
+        type={'h3'}
+        style={styles.monthAndYear}>{` ${date.month}, ${date.year}`}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  root: {flexDirection: 'row', alignItems: 'center'},
-  text: {
-    color: COLORS.grayscale[700],
-  },
+  root: {flexDirection: 'row', alignItems: 'flex-end'},
+  date: {fontSize: 48, lineHeight: 60},
+  monthAndYear: {marginBottom: 8},
 });
 
 export default DateText;
