@@ -1,12 +1,12 @@
-import {ImageSourcePropType, TextStyle, Dimensions} from 'react-native';
+import {TextStyle, Dimensions} from 'react-native';
 
 const DEVICE_SIZE = Dimensions.get('window');
 
-type IconType = 'gallery' | 'reverse' | 'plus';
-const ICONS: Record<IconType, ImageSourcePropType> = {
-  gallery: require('@assets/icons/ic-gallery.png'),
-  plus: require('@assets/icons/ic-plus.png'),
-  reverse: require('@assets/icons/ic-reverse.png'),
+const ICONS = {
+  plue: require('@assets/icons/ic_24_plus.png'),
+  list: require('@assets/icons/ic_24_list.png'),
+  close: require('@assets/icons/ic_24_close.png'),
+  search: require('@assets/icons/ic_24_search.png'),
 };
 
 const COLORS = {
