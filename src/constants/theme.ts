@@ -7,11 +7,14 @@ const ICONS = {
   list: require('@assets/icons/ic_24_list.png'),
   close: require('@assets/icons/ic_24_close.png'),
   search: require('@assets/icons/ic_24_search.png'),
+  star: require('@assets/icons/ic_24_star.png'),
+  leftArrow: require('@assets/icons/ic_24_arrow_left.png'),
 };
 
 const COLORS = {
   white: '#f8f9fa',
-  primary: '#fff9db',
+  primary: '#f8f9fa',
+  // primary: '#fff9db',
   grayscale: {
     100: '#f1f3f5',
     200: '#e9ecef',
@@ -23,6 +26,7 @@ const COLORS = {
     800: '#343a40',
     900: '#212529',
   },
+  dotColors: ['#ff6b6b', '#ff922b', '#fcc419', '#51cf66', '#5c7cfa'],
 };
 
 type FontType =
