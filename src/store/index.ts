@@ -1,19 +1,19 @@
-import {configureStore} from '@reduxjs/toolkit';
-import createSagaMiddleware from '@redux-saga/core';
-import {rootSaga} from '@/features';
+import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import searchReducer from '@/features/search/slice';
 import wordReducer from '@features/wordbook/slice';
+import {dictionaryApi} from './api';
 
-const sagaMiddleware = createSagaMiddleware();
-const store = configureStore({
-  reducer: {
-    search: searchReducer,
-    word: wordReducer,
-  },
-  middleware: [sagaMiddleware],
+const rootReducer = combineReducers({
+  [dictionaryApi.reducerPath]: dictionaryApi.reducer,
+  search: searchReducer,
+  word: wordReducer,
 });
 
-sagaMiddleware.run(rootSaga);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(dictionaryApi.middleware),
+});
 
 export default store;
 
