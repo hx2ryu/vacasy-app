@@ -16,6 +16,7 @@ const searchSlice = createSlice({
   initialState,
   reducers: {
     requestSearchWord: (_, action: PayloadAction<{keyword: string}>) => {
+      console.log('reducer');
       return {
         wordToSearch: action.payload.keyword,
         searchResult: undefined,

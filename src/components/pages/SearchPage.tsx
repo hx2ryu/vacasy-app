@@ -1,4 +1,4 @@
-import {addWord, Word} from '@/features/wordbook/slice';
+import {requestSearchWord} from '@/features/search/slice';
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
@@ -8,13 +8,14 @@ const SearchPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const {wordList} = useAppSelector(state => state.word);
 
-  const addWordToWordbook = useCallback(
-    (word: Word) => {
-      dispatch(addWord(word));
+  const searchWord = useCallback(
+    (keyword: string) => {
+      dispatch(requestSearchWord({keyword}));
+      console.log('page');
     },
     [dispatch],
   );
-  return <SearchTemplate onAddWord={addWordToWordbook} wordList={wordList} />;
+  return <SearchTemplate onSearchWord={searchWord} wordList={wordList} />;
 };
 
 export default SearchPage;

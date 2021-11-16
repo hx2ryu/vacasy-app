@@ -1,11 +1,15 @@
 import {configureStore} from '@reduxjs/toolkit';
-import reducer from '@/features';
 import createSagaMiddleware from '@redux-saga/core';
 import {rootSaga} from '@/features';
+import searchReducer from '@/features/search/slice';
+import wordReducer from '@features/wordbook/slice';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
-  reducer,
+  reducer: {
+    search: searchReducer,
+    word: wordReducer,
+  },
   middleware: [sagaMiddleware],
 });
 

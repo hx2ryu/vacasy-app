@@ -5,10 +5,10 @@ import {StyleSheet, View} from 'react-native';
 import {SearchBox} from '../organisms';
 
 type Props = {
-  onAddWord: (word: Word) => void;
+  onSearchWord: (keyword: string) => void;
   wordList: Array<Word>;
 };
-const SearchTemplate: React.FC<Props> = ({onAddWord, wordList}) => {
+const SearchTemplate: React.FC<Props> = ({onSearchWord, wordList}) => {
   return (
     <View style={styles.root}>
       <SearchBox
@@ -16,7 +16,7 @@ const SearchTemplate: React.FC<Props> = ({onAddWord, wordList}) => {
         autoFocus
         placeholder={'search your word.'}
         searchResult={wordList}
-        onAddWord={onAddWord}
+        onSearchWord={onSearchWord}
       />
     </View>
   );

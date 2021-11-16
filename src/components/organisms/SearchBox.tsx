@@ -16,12 +16,12 @@ import {SearhResult, WordCard} from '../molecules';
 interface Props extends TextInputProps {
   searchResult: Array<Word>;
   containerStyle?: ViewStyle;
-  onAddWord: (word: Word) => void;
+  onSearchWord: (keyword: string) => void;
 }
 const SearchBox: React.FC<Props> = ({
   searchResult,
   containerStyle,
-  onAddWord,
+  onSearchWord,
   ...props
 }) => {
   const [showResult, setShowResult] = useState<boolean>(false);
@@ -41,25 +41,12 @@ const SearchBox: React.FC<Props> = ({
           onChangeText={onChangeSearchText}
           onSubmitEditing={() => {
             setShowResult(true);
-            onAddWord({
-              word: searchText,
-              description: `description: ${searchText}`,
-            });
+            onSearchWord(searchText);
           }}
           style={styles.textInput}
         />
       </View>
-      {showResult && (
-        // <FlatList
-        //   style={{backgroundColor: 'blue'}}
-        //   data={searchResult}
-        //   renderItem={({item, index}) => (
-        //     // <SearhResult content={item.} key={index} />
-        //     <WordCard />
-        //   )}
-        // />
-        <Wordbook wordList={searchResult} />
-      )}
+      {showResult && <Wordbook wordList={searchResult} />}
     </View>
   );
 };
