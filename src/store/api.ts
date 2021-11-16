@@ -8,8 +8,9 @@ export const dictionaryApi = createApi({
     baseUrl: Config.DICTIONARY_API,
   }),
   endpoints: builder => ({
-    getSearchedResult: builder.query<SearchResult, string>({
+    getSearchedResult: builder.query<Array<SearchResult>, string>({
       query: keyword => `/v2/entries/en/${keyword}`,
+      
     }),
   }),
 });

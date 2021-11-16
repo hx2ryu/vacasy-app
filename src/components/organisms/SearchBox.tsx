@@ -12,6 +12,7 @@ import {
 import {Wordbook} from '.';
 import {TextInput} from '../atoms';
 import {SearhResult, WordCard} from '../molecules';
+import SearchResultViewer from './SearchResultViewer';
 
 interface Props extends TextInputProps {
   searchResult: Array<Word>;
@@ -46,7 +47,7 @@ const SearchBox: React.FC<Props> = ({
           style={styles.textInput}
         />
       </View>
-      {showResult && <Wordbook wordList={searchResult} />}
+      {showResult && <SearchResultViewer searchKeyword={searchText} />}
     </View>
   );
 };

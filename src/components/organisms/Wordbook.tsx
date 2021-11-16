@@ -3,6 +3,7 @@ import {Word} from '@/features/wordbook/slice';
 import {FlatList, StyleSheet} from 'react-native';
 import {COLORS, DEVICE_SIZE} from '@/constants/theme';
 import {WordCard} from '../molecules';
+import {getDotColor} from '@/utils';
 
 type Props = {
   wordList: Array<Word>;
@@ -16,7 +17,7 @@ const Wordbook: React.FC<Props> = ({wordList}) => {
         <WordCard
           word={item.word}
           description={item.description}
-          dotColor={COLORS.dotColors[index % 5]}
+          dotColor={getDotColor(index)}
           key={index}
         />
       )}

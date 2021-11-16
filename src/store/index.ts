@@ -1,6 +1,6 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import searchReducer from '@/features/search/slice';
-import wordReducer from '@features/wordbook/slice';
+import wordReducer from '@/features/wordbook/slice';
 import {dictionaryApi} from './api';
 
 const rootReducer = combineReducers({

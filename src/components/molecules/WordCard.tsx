@@ -4,12 +4,12 @@ import {Image, StyleSheet, View} from 'react-native';
 import {Button, Text} from '../atoms';
 // import Animated, {LightSpeedInLeft} from 'react-native-reanimated';
 
-type Props = {
+export type WordCardProps = {
   word: string;
   description: string;
   dotColor: string;
 };
-const WordCard: React.FC<Props> = props => {
+const WordCard: React.FC<WordCardProps> = props => {
   return (
     <View style={styles.root}>
       <View style={styles.middleWrapper}>
