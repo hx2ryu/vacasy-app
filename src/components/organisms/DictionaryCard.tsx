@@ -8,7 +8,7 @@ type Props = {
 };
 const DictionaryCard: React.FC<Props> = ({wordCardProps}) => {
   return (
-    <View>
+    <View style={{backgroundColor: 'yellow', width: 500, height: 1000}}>
       <View></View>
     </View>
   );

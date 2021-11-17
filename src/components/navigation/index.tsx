@@ -2,7 +2,7 @@ import React from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootParamList} from './types';
-import {HomePage, SearchPage} from '@components/pages';
+import {DictionaryDetailPage, HomePage, SearchPage} from '@components/pages';
 import {COLORS} from '@/constants/theme';
 import {BasicNavigationBar} from '../molecules';
 
@@ -40,6 +40,11 @@ const RootNavigator: React.FC = () => (
           ),
           presentation: 'containedTransparentModal',
         }}
+      />
+      <Stack.Screen
+        name="DictionaryDetail"
+        component={DictionaryDetailPage}
+        options={{presentation: 'transparentModal'}}
       />
     </Stack.Navigator>
   </NavigationContainer>

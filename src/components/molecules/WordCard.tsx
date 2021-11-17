@@ -1,5 +1,6 @@
 import {COLORS, ICONS} from '@/constants/theme';
 import {useAppDispatch} from '@/store/hooks';
+import {useNavigation} from '@react-navigation/core';
 import React, {useCallback, useMemo} from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Button, Text} from '../atoms';
@@ -16,6 +17,7 @@ const WordCard: React.FC<WordCardProps> = ({
   description,
   type = 'favorite',
 }) => {
+  const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const addFavoriteWord = useCallback(() => {
     // dispatch()
@@ -25,7 +27,13 @@ const WordCard: React.FC<WordCardProps> = ({
     return type === 'search-result' ? 'white' : COLORS.grayscale[700];
   }, [type]);
 
-  const showDetailInfo = useCallback(() => {}, []);
+  const showDetailInfo = useCallback(() => {
+    navigation.navigate('DictionaryDetail', {
+      word,
+      description,
+      dotColor,
+    });
+  }, [navigation]);
 
   return (
     <TouchableOpacity
