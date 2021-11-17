@@ -1,17 +1,8 @@
 import {COLORS, FONTS, ICONS} from '@/constants/theme';
 import {Word} from '@/features/wordbook/slice';
 import React, {useState} from 'react';
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  TextInputProps,
-  View,
-  ViewStyle,
-} from 'react-native';
-import {Wordbook} from '.';
+import {Image, StyleSheet, TextInputProps, View, ViewStyle} from 'react-native';
 import {TextInput} from '../atoms';
-import {SearhResult, WordCard} from '../molecules';
 import SearchResultViewer from './SearchResultViewer';
 
 interface Props extends TextInputProps {
@@ -55,10 +46,10 @@ const SearchBox: React.FC<Props> = ({
 const styles = StyleSheet.create({
   root: {
     justifyContent: 'center',
-    alignItems: 'center',
   },
   textInputWrapper: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   searchIcon: {

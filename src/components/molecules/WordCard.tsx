@@ -1,32 +1,59 @@
 import {COLORS, ICONS} from '@/constants/theme';
-import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {useAppDispatch} from '@/store/hooks';
+import React, {useCallback, useMemo} from 'react';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Button, Text} from '../atoms';
-// import Animated, {LightSpeedInLeft} from 'react-native-reanimated';
 
 export type WordCardProps = {
   word: string;
   description: string;
   dotColor: string;
+  type?: 'search-result' | 'favorite';
 };
-const WordCard: React.FC<WordCardProps> = props => {
+const WordCard: React.FC<WordCardProps> = ({
+  dotColor,
+  word,
+  description,
+  type = 'favorite',
+}) => {
+  const dispatch = useAppDispatch();
+  const addFavoriteWord = useCallback(() => {
+    // dispatch()
+  }, [dispatch]);
+
+  const color = useMemo(() => {
+    return type === 'search-result' ? 'white' : COLORS.grayscale[700];
+  }, [type]);
+
+  const showDetailInfo = useCallback(() => {}, []);
+
   return (
-    <View style={styles.root}>
+    <TouchableOpacity
+      style={[
+        styles.root,
+        {
+          borderColor: color,
+        },
+      ]}
+      onPress={showDetailInfo}>
       <View style={styles.middleWrapper}>
-        <View style={[styles.dot, {backgroundColor: props.dotColor}]} />
+        <View style={[styles.dot, {backgroundColor: dotColor}]} />
         <View style={styles.textWrapper}>
-          <Text type={'h4'}>{props.word}</Text>
-          <Text type={'p'}>{props.description}</Text>
+          <Text type={'h4'} style={{color}}>
+            {word}
+          </Text>
+          <Text type={'p'} style={{color}}>
+            {description}
+          </Text>
         </View>
       </View>
 
-      <Button
-        onPress={() => {
-          console.log('press');
-        }}>
-        <Image source={ICONS.star} />
-      </Button>
-    </View>
+      {type === 'search-result' && (
+        <Button onPress={addFavoriteWord}>
+          <Image source={ICONS.star} />
+        </Button>
+      )}
+    </TouchableOpacity>
   );
 };
 
@@ -38,7 +65,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderColor: COLORS.grayscale[700],
     padding: 16,
   },
   middleWrapper: {
