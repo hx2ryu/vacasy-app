@@ -14,17 +14,18 @@ const HorizontalScrollIndicator: React.FC<Props> = ({scrollX, pageCount}) => {
 
   return (
     <View style={styles.root}>
-      {inputRange.map(_ => {
-        const backgroundColor = dotPosition.interpolate({
-          inputRange,
-          outputRange: inputRange.map(i =>
-            i === _ ? COLORS.grayscale[700] : COLORS.grayscale[400],
-          ),
-        });
-        return (
-          <Animated.View style={[styles.dot, {backgroundColor}]} key={_} />
-        );
-      })}
+      {inputRange.length > 1 &&
+        inputRange.map(_ => {
+          const backgroundColor = dotPosition.interpolate({
+            inputRange,
+            outputRange: inputRange.map(i =>
+              i === _ ? COLORS.grayscale[700] : COLORS.grayscale[400],
+            ),
+          });
+          return (
+            <Animated.View style={[styles.dot, {backgroundColor}]} key={_} />
+          );
+        })}
     </View>
   );
 };

@@ -1,18 +1,18 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
-import searchReducer from '@/features/search/slice';
-import wordReducer from '@/features/wordbook/slice';
 import {dictionaryApi} from './api';
+import wordbookReducer from '@features/wordbook/slice';
 
 const rootReducer = combineReducers({
   [dictionaryApi.reducerPath]: dictionaryApi.reducer,
-  search: searchReducer,
-  word: wordReducer,
+  wordbook: wordbookReducer,
 });
 
 const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(dictionaryApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(dictionaryApi.middleware),
 });
 
 export default store;

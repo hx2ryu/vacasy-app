@@ -1,19 +1,22 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack/lib/typescript/src/types';
 import React, {useCallback} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import {DictionaryCard} from '../molecules';
+import {StyleSheet} from 'react-native';
 import {RootParamList} from '../navigation/types';
 import DictionaryDetailTemplate from '../templates/DictionaryDetailTemplate';
 
 type Props = NativeStackScreenProps<RootParamList, 'DictionaryDetail'>;
 const DictionaryDetailPage: React.FC<Props> = ({route, navigation}) => {
   const item = route.params;
-  const onGoBack = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
+  const handleNavigateToSearch = () => {
+    navigation.navigate('Search');
+  };
 
-  return <DictionaryDetailTemplate onPress={onGoBack} wordCardProps={item} />;
+  return (
+    <DictionaryDetailTemplate
+      onPress={handleNavigateToSearch}
+      wordCardProps={item}
+    />
+  );
 };
 
 export default DictionaryDetailPage;

@@ -4,8 +4,13 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
-import {Image, StyleSheet, View, ViewStyle} from 'react-native';
-import {Button} from '../atoms';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 interface Props extends NativeStackHeaderProps {
   style: ViewStyle;
@@ -17,11 +22,13 @@ const BasicNavigationBar: React.FC<Props> = ({style, navigation}) => {
 
   return (
     <View style={[styles.root, style]}>
-      <Button>{/* <Image source={ICONS.leftArrow} /> */}</Button>
+      <TouchableOpacity>
+        {/* <Image source={ICONS.leftArrow} /> */}
+      </TouchableOpacity>
 
-      <Button onPress={onNavigate}>
+      <TouchableOpacity onPress={onNavigate}>
         <Image source={ICONS.close} style={{tintColor: 'white'}} />
-      </Button>
+      </TouchableOpacity>
     </View>
   );
 };

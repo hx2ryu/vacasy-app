@@ -1,28 +1,46 @@
-import React, {useCallback, useRef} from 'react';
-import {TouchableOpacityProps, Animated, View, StyleSheet} from 'react-native';
-import {Button, Text} from '../atoms';
+import {ICONS} from '@/constants/theme';
+import {addWordIntoWordbook} from '@/features/wordbook/slice';
+import {useAppDispatch} from '@/store/hooks';
+import {getThumbnailMeaning} from '@/utils/word';
+import React from 'react';
+import {
+  TouchableOpacityProps,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {Text} from '../atoms';
 
 interface Props extends TouchableOpacityProps {
-  content: string;
+  content: Word;
+  dotColor: string;
 }
-const SearhResult: React.FC<Props> = ({content, ...props}) => {
-  const moreInfo = useRef(new Animated.Value(0)).current;
+const SearhResult: React.FC<Props> = ({content, dotColor}) => {
+  const dispatch = useAppDispatch();
+  const handleAddWordIntoWordbook = () => {
+    dispatch(addWordIntoWordbook(content));
+  };
 
-  const onPress = useCallback(() => {
-    Animated.timing(moreInfo, {
-      toValue: 30,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  }, []);
+  console.log(content);
 
   return (
     <View style={styles.root}>
-      <Button {...props} onPress={onPress}>
-        <Text type={'h1'}>{content}</Text>
-        <Animated.View
-          style={{height: 10, backgroundColor: 'blue'}}></Animated.View>
-      </Button>
+      <View style={styles.middleWrapper}>
+        <View style={[styles.dot, {backgroundColor: dotColor}]} />
+        <View style={styles.wordWrapper}>
+          <Text type={'h4'} style={styles.text}>
+            {content.word}
+          </Text>
+          <Text type={'p'} style={styles.text}>
+            {getThumbnailMeaning(content)}
+          </Text>
+        </View>
+      </View>
+
+      <TouchableOpacity onPress={handleAddWordIntoWordbook}>
+        <Image source={ICONS.star} style={{tintColor: 'white'}} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -30,5 +48,24 @@ const SearhResult: React.FC<Props> = ({content, ...props}) => {
 export default SearhResult;
 
 const styles = StyleSheet.create({
-  root: {backgroundColor: 'green'},
+  root: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomColor: 'white',
+    borderBottomWidth: 1,
+    marginBottom: 10,
+    paddingBottom: 10,
+  },
+  middleWrapper: {flexDirection: 'row', alignItems: 'center'},
+  wordWrapper: {width: '80%'},
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 16,
+  },
+  text: {
+    color: 'white',
+  },
 });

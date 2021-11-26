@@ -1,7 +1,12 @@
 import {COLORS, ICONS} from '@/constants/theme';
 import React from 'react';
-import {View, StyleSheet, Image, ViewProps} from 'react-native';
-import {Button} from '../atoms';
+import {
+  View,
+  StyleSheet,
+  Image,
+  ViewProps,
+  TouchableOpacity,
+} from 'react-native';
 
 interface Props extends ViewProps {
   onPressSearchButton: () => void;
@@ -9,9 +14,9 @@ interface Props extends ViewProps {
 const MainMenuBox: React.FC<Props> = ({onPressSearchButton, style}) => {
   return (
     <View style={[styles.root, style]}>
-      <Button style={styles.button} onPress={onPressSearchButton}>
+      <TouchableOpacity style={styles.button} onPress={onPressSearchButton}>
         <Image source={ICONS.search} style={styles.buttonIcon} />
-      </Button>
+      </TouchableOpacity>
     </View>
   );
 };

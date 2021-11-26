@@ -1,23 +1,47 @@
-import {requestSearchWord} from '@/features/search/slice';
-import {useAppDispatch, useAppSelector} from '@/store/hooks';
-import React, {useCallback} from 'react';
-import {StyleSheet} from 'react-native';
-import {SearchTemplate} from '../templates';
+import {COLORS, FONTS} from '@/constants/theme';
+import React, {useState} from 'react';
+import {StyleSheet, TextInput, View} from 'react-native';
+import {SearchResultViewer} from '../organisms';
 
 const SearchPage: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const {wordList} = useAppSelector(state => state.word);
+  const [keyword, setKeyword] = useState<string>('');
+  const handleSearchKeyword = (text: string) => {
+    setKeyword(text);
+  };
 
-  const searchWord = useCallback(
-    (keyword: string) => {
-      dispatch(requestSearchWord({keyword}));
-      console.log('page');
-    },
-    [dispatch],
+  return (
+    <View style={styles.root}>
+      <View style={styles.searchWrapper}>
+        <TextInput
+          autoFocus
+          placeholder={'search your word.'}
+          placeholderTextColor={COLORS.grayscale[400]}
+          style={styles.textInput}
+          onChangeText={handleSearchKeyword}
+        />
+      </View>
+      <SearchResultViewer keyword={keyword} />
+    </View>
   );
-  return <SearchTemplate onSearchWord={searchWord} wordList={wordList} />;
 };
 
 export default SearchPage;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: COLORS.grayscale[600],
+    justifyContent: 'center',
+  },
+  searchWrapper: {
+    alignItems: 'center',
+  },
+  textInput: {
+    ...FONTS.h2,
+    color: 'white',
+    marginLeft: 10,
+    paddingBottom: 5,
+    // borderBottomColor: 'white',
+    // borderBottomWidth: 1,
+  },
+});

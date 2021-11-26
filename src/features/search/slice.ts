@@ -1,35 +1,21 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Word} from '../wordbook/slice';
 
 type SearchState = {
-  wordToSearch: string;
-  searchResult: Array<Word> | undefined;
+  searchResult: Array<Word>;
 };
-
 const initialState: SearchState = {
-  wordToSearch: '',
-  searchResult: undefined,
+  searchResult: [],
 };
 
 const searchSlice = createSlice({
-  name: 'SEARCH',
+  name: 'search',
   initialState,
   reducers: {
-    requestSearchWord: (_, action: PayloadAction<{keyword: string}>) => {
-      console.log('reducer');
-      return {
-        wordToSearch: action.payload.keyword,
-        searchResult: undefined,
-      };
-    },
-    successSearchWord: (_, action: PayloadAction<Array<Word>>) => {
-      return {
-        ...initialState,
-        searchResult: action.payload,
-      };
+    updateSearchResult: (state, action: PayloadAction<Array<Word>>) => {
+      state.searchResult = action.payload;
     },
   },
 });
 
-export const {requestSearchWord, successSearchWord} = searchSlice.actions;
-export default searchSlice.reducer;
+export const {updateSearchResult} = searchSlice.actions;
+export default searchSlice;

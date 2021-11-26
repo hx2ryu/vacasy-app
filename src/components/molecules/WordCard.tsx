@@ -1,67 +1,31 @@
-import {COLORS, ICONS} from '@/constants/theme';
+import {COLORS} from '@/constants/theme';
 import {useAppDispatch} from '@/store/hooks';
-import {useNavigation} from '@react-navigation/core';
-import React, {useCallback, useMemo} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Button, Text} from '../atoms';
+import {getThumbnailMeaning} from '@/utils/word';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Text} from '../atoms';
 
 export type WordCardProps = {
-  word: string;
-  description: string;
+  word: Word;
   dotColor: string;
-  type?: 'search-result' | 'favorite';
 };
-const WordCard: React.FC<WordCardProps> = ({
-  dotColor,
-  word,
-  description,
-  type = 'favorite',
-}) => {
-  const navigation = useNavigation();
+const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
   const dispatch = useAppDispatch();
-  const addFavoriteWord = useCallback(() => {
-    // dispatch()
-  }, [dispatch]);
-
-  const color = useMemo(() => {
-    return type === 'search-result' ? 'white' : COLORS.grayscale[700];
-  }, [type]);
-
-  const showDetailInfo = useCallback(() => {
-    navigation.navigate('DictionaryDetail', {
-      word,
-      description,
-      dotColor,
-    });
-  }, [navigation]);
 
   return (
-    <TouchableOpacity
-      style={[
-        styles.root,
-        {
-          borderColor: color,
-        },
-      ]}
-      onPress={showDetailInfo}>
+    <View style={styles.root}>
       <View style={styles.middleWrapper}>
         <View style={[styles.dot, {backgroundColor: dotColor}]} />
         <View style={styles.textWrapper}>
-          <Text type={'h4'} style={{color}}>
-            {word}
+          <Text type={'h4'} style={styles.text}>
+            {word?.word}
           </Text>
-          <Text type={'p'} style={{color}}>
-            {description}
+          <Text type={'p'} style={styles.text}>
+            {getThumbnailMeaning(word)}
           </Text>
         </View>
       </View>
-
-      {type === 'search-result' && (
-        <Button onPress={addFavoriteWord}>
-          <Image source={ICONS.star} />
-        </Button>
-      )}
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -74,13 +38,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     padding: 16,
+    borderColor: COLORS.grayscale[700],
   },
   middleWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  text: {
+    color: COLORS.grayscale[700],
+  },
   textWrapper: {
     marginLeft: 16,
+    width: '80%',
   },
   dot: {
     width: 10,

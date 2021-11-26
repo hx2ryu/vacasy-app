@@ -1,4 +1,4 @@
 import Wordbook from './Wordbook';
-import SearchBox from './SearchBox';
+import SearchResultViewer from './SearchResultViewer';
 
-export {Wordbook, SearchBox};
+export {Wordbook, SearchResultViewer};

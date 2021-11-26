@@ -1,4 +1,10 @@
-export type SearchResult = {
+type Wordbook = {
+  date: string;
+  wordList: Array<Word>;
+};
+
+type Word = {
+  timestamp: Date | undefined;
   word: string;
   phonetic: string;
   phonetics: Array<Phonetic>;
