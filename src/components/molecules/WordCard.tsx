@@ -1,8 +1,15 @@
-import {COLORS} from '@/constants/theme';
+import {COLORS, ICONS} from '@/constants/theme';
+import {removeWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
 import {getThumbnailMeaning} from '@/utils/word';
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  View,
+  Image,
+} from 'react-native';
 import {Text} from '../atoms';
 
 export type WordCardProps = {
@@ -11,9 +18,29 @@ export type WordCardProps = {
 };
 const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
   const dispatch = useAppDispatch();
+  const right = useRef(new Animated.Value(-100)).current;
+  const [isShowed, setIsShowed] = useState<boolean>(false);
+
+  const handleExpandMenu = () => {
+    Animated.timing(right, {
+      toValue: isShowed ? -100 : 10,
+      duration: 700,
+      useNativeDriver: false,
+    }).start();
+
+    setIsShowed(flag => !flag);
+  };
+
+  const handleDelete = () => {
+    dispatch(
+      removeWord({
+        word,
+      }),
+    );
+  };
 
   return (
-    <View style={styles.root}>
+    <TouchableOpacity style={styles.root} onPress={handleExpandMenu}>
       <View style={styles.middleWrapper}>
         <View style={[styles.dot, {backgroundColor: dotColor}]} />
         <View style={styles.textWrapper}>
@@ -24,8 +51,24 @@ const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
             {getThumbnailMeaning(word)}
           </Text>
         </View>
+
+        <Animated.View
+          style={[
+            styles.moreMenuWrapper,
+            {
+              right,
+            },
+          ]}>
+          <TouchableOpacity style={styles.button}>
+            <Image source={ICONS.list} style={{tintColor: dotColor}} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={handleDelete}>
+            <Image source={ICONS.close} style={{tintColor: dotColor}} />
+          </TouchableOpacity>
+        </Animated.View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -49,11 +92,23 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     marginLeft: 16,
-    width: '80%',
+    width: '70%',
   },
   dot: {
     width: 10,
     height: 10,
     borderRadius: 5,
+  },
+  button: {
+    marginHorizontal: 5,
+    padding: 5,
+    borderRadius: 5,
+    backgroundColor: COLORS.grayscale[200],
+  },
+  moreMenuWrapper: {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    right: -10,
   },
 });

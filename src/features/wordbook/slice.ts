@@ -1,22 +1,20 @@
-import {Wordbook} from '@/components/organisms';
 import {RootState} from '@/store';
-import {getDateString} from '@/utils/date';
 import {
   createEntityAdapter,
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit';
 
-const wordbookAdapter = createEntityAdapter<Wordbook>({
+const adapter = createEntityAdapter<Wordbook>({
   selectId: state => state.date,
   sortComparer: (a, b) => a.date.localeCompare(b.date),
 });
 
 const wordbookSlice = createSlice({
   name: 'wordbook',
-  initialState: wordbookAdapter.getInitialState(),
+  initialState: adapter.getInitialState(),
   reducers: {
-    addWordIntoWordbook: {
+    addWord: {
       reducer: (
         state,
         {payload: {date, word}}: PayloadAction<{date: string; word: Word}>,
@@ -24,7 +22,7 @@ const wordbookSlice = createSlice({
         const updatedWordList = state.entities[date]
           ? state.entities[date]?.wordList.concat(word)
           : [word];
-        wordbookAdapter.setOne(state, {
+        adapter.setOne(state, {
           date,
           wordList: updatedWordList!,
         });
@@ -38,19 +36,22 @@ const wordbookSlice = createSlice({
         };
       },
     },
-    // addWord: (state, action: PayloadAction<{date: string; word: Word}>) => {
-    //   const {date, word} = action.payload;
-    //   state.ids.push(date);
-    //   state.entities[date]?.wordList.push(word);
-    //   console.log(state);
-    // },
-    removeWord: wordbookAdapter.removeOne,
+    removeWord: (state, {payload: {word}}: PayloadAction<{word: Word}>) => {
+      const key = word.timestamp.toDateString();
+      const updatedWordList = state.entities[key]?.wordList.filter(_ => {
+        return _.timestamp !== word.timestamp;
+      });
+      adapter.setOne(state, {
+        date: key,
+        wordList: updatedWordList!,
+      });
+    },
   },
 });
 
-export const {addWordIntoWordbook, removeWord} = wordbookSlice.actions;
+export const {addWord, removeWord} = wordbookSlice.actions;
 export default wordbookSlice.reducer;
 
-export const wordBookSelector = wordbookAdapter.getSelectors<RootState>(
+export const wordBookSelector = adapter.getSelectors<RootState>(
   state => state.wordbook,
 );

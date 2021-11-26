@@ -41,7 +41,5 @@ const styles = StyleSheet.create({
     color: 'white',
     marginLeft: 10,
     paddingBottom: 5,
-    // borderBottomColor: 'white',
-    // borderBottomWidth: 1,
   },
 });

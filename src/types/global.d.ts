@@ -4,7 +4,7 @@ type Wordbook = {
 };
 
 type Word = {
-  timestamp: Date | undefined;
+  timestamp: Date;
   word: string;
   phonetic: string;
   phonetics: Array<Phonetic>;

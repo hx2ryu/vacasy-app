@@ -1,5 +1,5 @@
 import {ICONS} from '@/constants/theme';
-import {addWordIntoWordbook} from '@/features/wordbook/slice';
+import {addWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
 import {getThumbnailMeaning} from '@/utils/word';
 import React from 'react';
@@ -19,10 +19,13 @@ interface Props extends TouchableOpacityProps {
 const SearhResult: React.FC<Props> = ({content, dotColor}) => {
   const dispatch = useAppDispatch();
   const handleAddWordIntoWordbook = () => {
-    dispatch(addWordIntoWordbook(content));
+    dispatch(
+      addWord({
+        ...content,
+        timestamp: new Date(),
+      }),
+    );
   };
-
-  console.log(content);
 
   return (
     <View style={styles.root}>
