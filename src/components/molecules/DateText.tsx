@@ -4,21 +4,25 @@ import {StyleSheet, View} from 'react-native';
 import {Text} from '../atoms';
 
 type Props = {
-  inputDate: Date;
+  dateString: string;
 };
-const DateText: React.FC<Props> = ({inputDate}) => {
+const DateText: React.FC<Props> = ({dateString}) => {
   const date = useMemo(() => {
-    return getDateString(inputDate);
-  }, [inputDate]);
+    return getDateString(dateString);
+  }, [dateString]);
 
   return (
-    <View style={styles.root}>
-      <Text type={'h1'} style={styles.date}>
-        {date.date}
-      </Text>
-      <Text
-        type={'h3'}
-        style={styles.monthAndYear}>{` ${date.month}, ${date.year}`}</Text>
+    <View>
+      {date && (
+        <View style={styles.root}>
+          <Text type={'h1'} style={styles.date}>
+            {date.date}
+          </Text>
+          <Text type={'h3'} style={styles.monthAndYear}>
+            {` ${date.month}, ${date.year}`}
+          </Text>
+        </View>
+      )}
     </View>
   );
 };

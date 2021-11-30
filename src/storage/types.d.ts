@@ -1,0 +1,1 @@
+type STORAGE_KEYS = 'WORDBOOK';

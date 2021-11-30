@@ -60,7 +60,7 @@ const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
             },
           ]}>
           <TouchableOpacity style={styles.button}>
-            <Image source={ICONS.list} style={{tintColor: dotColor}} />
+            <Image source={ICONS.info} style={{tintColor: dotColor}} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={handleDelete}>

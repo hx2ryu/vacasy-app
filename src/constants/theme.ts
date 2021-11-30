@@ -7,7 +7,8 @@ const ICONS = {
   list: require('@assets/icons/ic_24_list.png'),
   close: require('@assets/icons/ic_24_close.png'),
   search: require('@assets/icons/ic_24_search.png'),
-  star: require('@assets/icons/ic_24_star2.png'),
+  'star-on': require('@assets/icons/ic_24_star_on.png'),
+  'star-off': require('@assets/icons/ic_24_star_off.png'),
   leftArrow: require('@assets/icons/ic_24_arrow_left.png'),
   info: require('@assets/icons/ic_24_info.png'),
 };

@@ -1,13 +1,14 @@
 type Wordbook = {
   date: string;
-  wordList: Array<Word>;
+  wordList: Array<Word> | undefined;
 };
 
 type Word = {
-  timestamp: Date;
+  id: string;
   word: string;
   phonetic: string;
   phonetics: Array<Phonetic>;
+  timestamp: string;
   origin: string;
   meanings: Array<Meaning>;
 };

@@ -1,8 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack/lib/typescript/src/types';
-import React, {useCallback} from 'react';
-import {StyleSheet} from 'react-native';
-import {RootParamList} from '../navigation/types';
-import DictionaryDetailTemplate from '../templates/DictionaryDetailTemplate';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {RootParamList} from '../../navigation/types';
 
 type Props = NativeStackScreenProps<RootParamList, 'DictionaryDetail'>;
 const DictionaryDetailPage: React.FC<Props> = ({route, navigation}) => {
@@ -11,12 +10,7 @@ const DictionaryDetailPage: React.FC<Props> = ({route, navigation}) => {
     navigation.navigate('Search');
   };
 
-  return (
-    <DictionaryDetailTemplate
-      onPress={handleNavigateToSearch}
-      wordCardProps={item}
-    />
-  );
+  return <View></View>;
 };
 
 export default DictionaryDetailPage;

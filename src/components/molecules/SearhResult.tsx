@@ -2,7 +2,7 @@ import {ICONS} from '@/constants/theme';
 import {addWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
 import {getThumbnailMeaning} from '@/utils/word';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   TouchableOpacityProps,
   View,
@@ -15,16 +15,18 @@ import {Text} from '../atoms';
 interface Props extends TouchableOpacityProps {
   content: Word;
   dotColor: string;
+  alreadyAdded: boolean;
 }
-const SearhResult: React.FC<Props> = ({content, dotColor}) => {
+const SearhResult: React.FC<Props> = ({content, dotColor, alreadyAdded}) => {
   const dispatch = useAppDispatch();
   const handleAddWordIntoWordbook = () => {
-    dispatch(
-      addWord({
-        ...content,
-        timestamp: new Date(),
-      }),
-    );
+    if (alreadyAdded === false) {
+      dispatch(
+        addWord({
+          ...content,
+        }),
+      );
+    }
   };
 
   return (
@@ -42,7 +44,14 @@ const SearhResult: React.FC<Props> = ({content, dotColor}) => {
       </View>
 
       <TouchableOpacity onPress={handleAddWordIntoWordbook}>
-        <Image source={ICONS.star} style={{tintColor: 'white'}} />
+        {alreadyAdded ? (
+          <Image
+            source={ICONS['star-on']}
+            style={{backgroundColor: 'white', borderRadius: 20}}
+          />
+        ) : (
+          <Image source={ICONS['star-off']} />
+        )}
       </TouchableOpacity>
     </View>
   );

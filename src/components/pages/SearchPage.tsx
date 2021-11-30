@@ -1,6 +1,13 @@
-import {COLORS, FONTS} from '@/constants/theme';
-import React, {useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {COLORS, FONTS, ICONS} from '@/constants/theme';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  Animated,
+  Image,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
 import {SearchResultViewer} from '../organisms';
 
 const SearchPage: React.FC = () => {
@@ -9,9 +16,25 @@ const SearchPage: React.FC = () => {
     setKeyword(text);
   };
 
+  const position = useRef(new Animated.Value(100)).current;
+  useEffect(() => {
+    Animated.timing(position, {
+      toValue: -20,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  }, []);
+
   return (
     <View style={styles.root}>
-      <View style={styles.searchWrapper}>
+      <Animated.View
+        style={[
+          styles.searchWrapper,
+          {
+            top: position,
+          },
+        ]}>
+        <Image source={ICONS.search} style={styles.icon} />
         <TextInput
           autoFocus
           placeholder={'search your word.'}
@@ -19,7 +42,7 @@ const SearchPage: React.FC = () => {
           style={styles.textInput}
           onChangeText={handleSearchKeyword}
         />
-      </View>
+      </Animated.View>
       <SearchResultViewer keyword={keyword} />
     </View>
   );
@@ -34,6 +57,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   searchWrapper: {
+    position: 'absolute',
+    left: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   textInput: {
@@ -41,5 +68,8 @@ const styles = StyleSheet.create({
     color: 'white',
     marginLeft: 10,
     paddingBottom: 5,
+  },
+  icon: {
+    tintColor: COLORS.grayscale[400],
   },
 });

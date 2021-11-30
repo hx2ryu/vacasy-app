@@ -1,9 +1,22 @@
-export function getDateString(date: Date) {
-  return {
-    year: date.getFullYear(),
-    month: getMonth(date),
-    date: date.getDate(),
-  };
+export function getDateString(dateStr: string) {
+  const splittedDate = dateStr.split('/');
+  if (splittedDate.length > 2) {
+    return {
+      year: splittedDate[2],
+      month: getMonth(splittedDate[0]),
+      date: splittedDate[1],
+    };
+  } else {
+    return undefined;
+  }
+}
+
+export function extractOnlyDateFromLocaleString(timestamp: string) {
+  try {
+    return timestamp.split(',')[0];
+  } catch {
+    return undefined;
+  }
 }
 
 export function getTime(date: Date) {
@@ -39,44 +52,44 @@ export function getDayOfTheWeek(date: Date) {
   return rtnValue;
 }
 
-export function getMonth(date: Date) {
+export function getMonth(month: string) {
   let rtnValue: string;
-  switch (date.getMonth()) {
-    case 0:
+  switch (month) {
+    case '1':
     default:
       rtnValue = 'Jan';
       break;
-    case 1:
+    case '2':
       rtnValue = 'Feb';
       break;
-    case 2:
+    case '3':
       rtnValue = 'Mar';
       break;
-    case 3:
+    case '4':
       rtnValue = 'Apr';
       break;
-    case 4:
+    case '5':
       rtnValue = 'May';
       break;
-    case 5:
+    case '6':
       rtnValue = 'Jun';
       break;
-    case 6:
+    case '7':
       rtnValue = 'Jul';
       break;
-    case 7:
+    case '8':
       rtnValue = 'Aug';
       break;
-    case 8:
+    case '8':
       rtnValue = 'Sep';
       break;
-    case 9:
+    case '10':
       rtnValue = 'Oct';
       break;
-    case 10:
+    case '11':
       rtnValue = 'Nov';
       break;
-    case 11:
+    case '12':
       rtnValue = 'Dec';
       break;
   }
