@@ -1,8 +1,5 @@
 import {ICONS} from '@/constants/theme';
-import {
-  NativeStackHeaderProps,
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
+import {NativeStackHeaderProps} from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
 import {
   Image,
