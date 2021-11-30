@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleSheet,
   TextInput,
+  KeyboardAvoidingView,
   View,
 } from 'react-native';
 import {SearchResultViewer} from '../organisms';
@@ -16,22 +17,32 @@ const SearchPage: React.FC = () => {
     setKeyword(text);
   };
 
-  const position = useRef(new Animated.Value(100)).current;
+  const xPos = useRef(new Animated.Value(100)).current;
+  const yPos = useRef(new Animated.Value(150)).current;
+
   useEffect(() => {
-    Animated.timing(position, {
-      toValue: -20,
-      duration: 1000,
+    const xAnim = Animated.timing(xPos, {
+      toValue: 30,
+      duration: 700,
       useNativeDriver: false,
-    }).start();
+    });
+    const yAnim = Animated.timing(yPos, {
+      toValue: -20,
+      duration: 800,
+      useNativeDriver: false,
+    });
+
+    Animated.sequence([yAnim, xAnim]).start();
   }, []);
 
   return (
-    <View style={styles.root}>
+    <KeyboardAvoidingView style={styles.root}>
       <Animated.View
         style={[
           styles.searchWrapper,
           {
-            top: position,
+            top: yPos,
+            left: xPos,
           },
         ]}>
         <Image source={ICONS.search} style={styles.icon} />
@@ -44,7 +55,7 @@ const SearchPage: React.FC = () => {
         />
       </Animated.View>
       <SearchResultViewer keyword={keyword} />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
