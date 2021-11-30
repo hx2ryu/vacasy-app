@@ -23,7 +23,6 @@ export default Wordbook;
 
 const styles = StyleSheet.create({
   list: {
-    padding: 16,
     width: DEVICE_SIZE.width - 32,
   },
 });

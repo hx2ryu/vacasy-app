@@ -28,7 +28,7 @@ const COLORS = {
     800: '#343a40',
     900: '#212529',
   },
-  dotColors: ['#ff6b6b', '#ff922b', '#fcc419', '#51cf66', '#5c7cfa'],
+  dotColors: ['#ff6b6b', '#fcc419', '#51cf66', '#ff922b', '#5c7cfa'],
 };
 
 type FontType =

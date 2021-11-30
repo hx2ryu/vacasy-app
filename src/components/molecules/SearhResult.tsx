@@ -34,10 +34,10 @@ const SearhResult: React.FC<Props> = ({content, dotColor, alreadyAdded}) => {
       <View style={styles.middleWrapper}>
         <View style={[styles.dot, {backgroundColor: dotColor}]} />
         <View style={styles.wordWrapper}>
-          <Text type={'h4'} style={styles.text}>
+          <Text type={'h6'} style={styles.text}>
             {content.word}
           </Text>
-          <Text type={'p'} style={styles.text}>
+          <Text type={'blockQuote2'} style={styles.text}>
             {getThumbnailMeaning(content)}
           </Text>
         </View>

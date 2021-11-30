@@ -1,6 +1,6 @@
 import {ICONS} from '@/constants/theme';
 import {NativeStackHeaderProps} from '@react-navigation/native-stack';
-import React, {useCallback} from 'react';
+import React from 'react';
 import {
   Image,
   StyleSheet,
@@ -13,9 +13,9 @@ interface Props extends NativeStackHeaderProps {
   style: ViewStyle;
 }
 const BasicNavigationBar: React.FC<Props> = ({style, navigation}) => {
-  const onNavigate = useCallback(() => {
+  const onNavigate = () => {
     navigation.goBack();
-  }, [navigation]);
+  };
 
   return (
     <View style={[styles.root, style]}>

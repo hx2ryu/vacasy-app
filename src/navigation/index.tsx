@@ -8,6 +8,7 @@ import {BasicNavigationBar} from '../components/molecules';
 import {useAppDispatch} from '@/store/hooks';
 import {loadWordbook} from '@/features/wordbook/slice';
 import {getDataFromStorage} from '@/storage';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Theme = {
   ...DefaultTheme,
@@ -19,6 +20,7 @@ const Theme = {
 const Stack = createNativeStackNavigator<RootParamList>();
 
 const RootNavigator: React.FC = () => {
+  const {top} = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const loadData = async () => {
     const wordbook = await getDataFromStorage('WORDBOOK');
@@ -42,18 +44,6 @@ const RootNavigator: React.FC = () => {
           name="Search"
           component={SearchPage}
           options={{
-            headerShown: true,
-            header: props => (
-              <BasicNavigationBar
-                {...props}
-                style={{
-                  marginTop: 500,
-                  borderTopLeftRadius: 20,
-                  borderTopRightRadius: 20,
-                  backgroundColor: COLORS.grayscale[600],
-                }}
-              />
-            ),
             presentation: 'containedTransparentModal',
           }}
         />

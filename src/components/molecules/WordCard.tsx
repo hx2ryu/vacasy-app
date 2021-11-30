@@ -23,12 +23,12 @@ const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
 
   const handleExpandMenu = () => {
     Animated.timing(right, {
-      toValue: isShowed ? -100 : 10,
+      toValue: isShowed ? -70 : 20,
       duration: 700,
       useNativeDriver: false,
-    }).start();
-
-    setIsShowed(flag => !flag);
+    }).start(() => {
+      setIsShowed(flag => !flag);
+    });
   };
 
   const handleDelete = () => {
@@ -44,21 +44,15 @@ const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
       <View style={styles.middleWrapper}>
         <View style={[styles.dot, {backgroundColor: dotColor}]} />
         <View style={styles.textWrapper}>
-          <Text type={'h4'} style={styles.text}>
+          <Text type={'h6'} style={styles.text}>
             {word?.word}
           </Text>
-          <Text type={'p'} style={styles.text}>
+          <Text type={'blockQuote2'} style={styles.text}>
             {getThumbnailMeaning(word)}
           </Text>
         </View>
 
-        <Animated.View
-          style={[
-            styles.moreMenuWrapper,
-            {
-              right,
-            },
-          ]}>
+        <Animated.View style={[styles.moreMenuWrapper, {right}]}>
           <TouchableOpacity style={styles.button}>
             <Image source={ICONS.info} style={{tintColor: dotColor}} />
           </TouchableOpacity>

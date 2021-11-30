@@ -60,10 +60,8 @@ const HomePage: React.FC<Props> = ({navigation}) => {
         horizontal
         scrollEnabled
         pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        style={styles.scrollView}>
+        showsHorizontalScrollIndicator={false}>
         {wordbooks.map((item, index) => {
-          // setFocusedPateDate(item.date);
           const wordList = item.wordList;
           if (wordList) {
             return <Wordbook key={index} wordList={wordList} />;
@@ -92,7 +90,6 @@ const styles = StyleSheet.create({
     padding: 16,
     justifyContent: 'space-between',
   },
-  scrollView: {paddingVertical: 16},
   bottomMenu: {
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
