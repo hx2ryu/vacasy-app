@@ -14,7 +14,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {SearchResultViewer} from '../organisms';
 
 type Props = NativeStackScreenProps<RootParamList, 'Search'>;
-const SearchPage: React.FC<Props> = ({navigation}) => {
+const SearchPage: React.FC<Props> = ({navigation, route}) => {
   const inset = useSafeAreaInsets();
   const [keyword, setKeyword] = useState<string>('');
 
@@ -69,6 +69,7 @@ const SearchPage: React.FC<Props> = ({navigation}) => {
 
       <SearchResultViewer
         keyword={keyword}
+        focusedPageDate={route.params.wordbookKey}
         style={{marginTop: inset.top + 32}}
       />
     </KeyboardAvoidingView>

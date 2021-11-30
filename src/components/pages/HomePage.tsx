@@ -18,7 +18,9 @@ const HomePage: React.FC<Props> = ({navigation}) => {
   const [pageIndex, setPageIndex] = useState<number>(0);
 
   const handleOpenSearchModal = () => {
-    navigation.navigate('Search', undefined);
+    navigation.navigate('Search', {
+      wordbookKey: focusedPageDate,
+    });
   };
 
   useEffect(() => {

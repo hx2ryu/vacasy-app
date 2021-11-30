@@ -2,7 +2,7 @@ import {WordCardProps} from '@components/molecules/WordCard';
 
 type RootParamList = {
   Home: undefined;
-  Search: undefined;
+  Search: {wordbookKey: string};
   DictionaryDetail: WordCardProps;
 };
 

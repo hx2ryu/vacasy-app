@@ -3,6 +3,6 @@ export function getThumbnailMeaning(word: Word): string {
   return firstMeaning ? firstMeaning : '';
 }
 
-export function contains(array: Array<string>, candidate: string) {
-  return array.find(_ => _ === candidate) !== undefined;
+export function contains(array: Array<string> | undefined, candidate: string) {
+  return array?.find(_ => _ === candidate) !== undefined;
 }
