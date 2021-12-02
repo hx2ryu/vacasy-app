@@ -1,16 +1,10 @@
-import {COLORS, FONTS, ICONS} from '@/constants/theme';
+import {COLORS, FONTS} from '@/constants/theme';
 import {RootParamList} from '@/navigation/types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  Animated,
-  Image,
-  StyleSheet,
-  TextInput,
-  KeyboardAvoidingView,
-  Pressable,
-} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SearchContainer} from '../molecules';
 import {SearchResultViewer} from '../organisms';
 
 type Props = NativeStackScreenProps<RootParamList, 'Search'>;
@@ -52,27 +46,20 @@ const SearchPage: React.FC<Props> = ({navigation, route}) => {
   }, []);
 
   return (
-    <KeyboardAvoidingView style={styles.root}>
-      <Animated.View style={[styles.searchWrapper, {top, left, opacity}]}>
-        <Image source={ICONS.search} style={styles.icon} />
-        <TextInput
-          autoFocus
-          placeholder={'search your word.'}
-          placeholderTextColor={COLORS.grayscale[400]}
-          style={styles.textInput}
-          onChangeText={handleSearchKeyword}
-        />
-        <Pressable onPress={handleNavigate} style={styles.navigationButton}>
-          <Image source={ICONS.close} style={styles.icon} />
-        </Pressable>
-      </Animated.View>
-
+    <View style={styles.root}>
+      <SearchContainer
+        left={left}
+        top={top}
+        opacity={opacity}
+        onChangeText={handleSearchKeyword}
+        onNavigate={handleNavigate}
+      />
       <SearchResultViewer
         keyword={keyword}
         focusedPageDate={route.params.wordbookKey}
         style={{marginTop: inset.top + 32}}
       />
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -85,10 +72,10 @@ const styles = StyleSheet.create({
   },
   searchWrapper: {
     position: 'absolute',
-    left: 30,
+    left: 16,
     right: 0,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     zIndex: 1,
   },
@@ -97,14 +84,15 @@ const styles = StyleSheet.create({
     color: 'white',
     marginLeft: 10,
     paddingBottom: 5,
-    width: '75%',
+    width: '60%',
   },
   navigationButton: {
-    width: 50,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 16,
   },
+  cancelText: {color: COLORS.grayscale[400]},
   icon: {
     tintColor: COLORS.grayscale[400],
   },

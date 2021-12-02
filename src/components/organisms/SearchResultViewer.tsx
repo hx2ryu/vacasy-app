@@ -3,8 +3,9 @@ import {wordBookSelector} from '@/features/wordbook/slice';
 import {useAppSelector} from '@/store/hooks';
 import {getDotColor} from '@/utils';
 import {contains} from '@/utils/word';
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {FlatList, StyleSheet, View, ViewStyle} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {SearhResult} from '../molecules';
 
 type Props = {
@@ -17,6 +18,7 @@ const SearchResultViewer: React.FC<Props> = ({
   focusedPageDate,
   style,
 }) => {
+  const {top, bottom} = useSafeAreaInsets();
   const {data} = useSearchWordQuery(keyword);
   const state = useAppSelector(state => state);
   const wordbook = wordBookSelector.selectById(state, focusedPageDate);
@@ -26,7 +28,8 @@ const SearchResultViewer: React.FC<Props> = ({
   }, [wordbook]);
 
   return (
-    <View style={[styles.root, style]}>
+    <View
+      style={[styles.root, style, {paddingTop: top, paddingBottom: bottom}]}>
       {keyword !== '' && (
         <FlatList
           style={styles.FlatList}
@@ -52,7 +55,6 @@ export default SearchResultViewer;
 const styles = StyleSheet.create({
   root: {
     paddingHorizontal: 16,
-    paddingTop: 30,
   },
   FlatList: {
     borderRadius: 10,

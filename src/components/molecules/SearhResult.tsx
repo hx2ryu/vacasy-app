@@ -2,7 +2,7 @@ import {ICONS} from '@/constants/theme';
 import {addWord, removeWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
 import {getThumbnailMeaning} from '@/utils/word';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   TouchableOpacityProps,
   View,
@@ -19,6 +19,7 @@ interface Props extends TouchableOpacityProps {
 }
 const SearhResult: React.FC<Props> = ({content, dotColor, alreadyAdded}) => {
   const dispatch = useAppDispatch();
+  const count = useRef<number>(0);
   const handleAddWordIntoWordbook = () => {
     if (alreadyAdded === false) {
       dispatch(

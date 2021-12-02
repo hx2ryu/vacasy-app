@@ -2,7 +2,13 @@ import {wordBookSelector} from '@/features/wordbook/slice';
 import {useAppSelector} from '@/store/hooks';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
+import {
+  Animated,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {DateText, HorizontalScrollIndicator, MainMenuBox} from '../molecules';
 import {RootParamList} from '../../navigation/types';
@@ -15,12 +21,21 @@ const HomePage: React.FC<Props> = ({navigation}) => {
   const {top, bottom} = useSafeAreaInsets();
   const scrollX = useRef(new Animated.Value(0)).current;
   const [focusedPageDate, setFocusedPateDate] = useState<string>('');
-  const [pageIndex, setPageIndex] = useState<number>(0);
 
   const handleOpenSearchModal = () => {
     navigation.navigate('Search', {
       wordbookKey: focusedPageDate,
     });
+  };
+
+  const handleUpdateTitle = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (e.nativeEvent.targetContentOffset?.x !== undefined) {
+      const pos = Math.ceil(
+        e.nativeEvent.targetContentOffset.x / DEVICE_SIZE.width,
+      );
+
+      setFocusedPateDate(wordbooks[pos].date);
+    }
   };
 
   useEffect(() => {
@@ -29,24 +44,13 @@ const HomePage: React.FC<Props> = ({navigation}) => {
         ? wordbooks[0].date
         : new Date().toLocaleDateString();
     setFocusedPateDate(intitailDate);
-
-    scrollX.addListener(({value}) => {
-      const pos = Math.floor(value / DEVICE_SIZE.width);
-      if (pos > -1 && wordbooks[pageIndex]) {
-        setPageIndex(pos);
-        console.log(wordbooks[pageIndex].date);
-        setFocusedPateDate(wordbooks[pageIndex].date);
-      }
-    });
-
-    return () => scrollX.removeAllListeners();
-  }, [wordbooks]);
+  }, []);
 
   return (
     <View style={[styles.root, {marginTop: top, marginBottom: bottom}]}>
       {focusedPageDate !== '' && <DateText dateString={focusedPageDate} />}
-
       <Animated.ScrollView
+        onScrollEndDrag={handleUpdateTitle}
         onScroll={Animated.event(
           [
             {

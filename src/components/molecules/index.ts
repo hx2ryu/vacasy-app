@@ -4,10 +4,10 @@ import DateText from './DateText';
 import WordCard from './WordCard';
 import BasicNavigationBar from './BasicNavigationBar';
 import HorizontalScrollIndicator from './HorizontalScrollIndicator';
-import DictionaryCard from '../organisms/DictionaryCard';
+import SearchContainer from './SearchContainer';
 
 export {
-  DictionaryCard,
+  SearchContainer,
   SearhResult,
   MainMenuBox,
   DateText,
