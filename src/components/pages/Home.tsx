@@ -16,7 +16,7 @@ import {Wordbook} from '../organisms';
 import {DEVICE_SIZE} from '@/constants/theme';
 
 type Props = NativeStackScreenProps<RootParamList, 'Home'>;
-const HomePage: React.FC<Props> = ({navigation}) => {
+const Home: React.FC<Props> = ({navigation}) => {
   const wordbooks = useAppSelector(wordBookSelector.selectAll);
   const {top, bottom} = useSafeAreaInsets();
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -88,7 +88,7 @@ const HomePage: React.FC<Props> = ({navigation}) => {
   );
 };
 
-export default HomePage;
+export default Home;
 
 const styles = StyleSheet.create({
   root: {

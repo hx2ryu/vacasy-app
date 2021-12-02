@@ -1,5 +1,5 @@
-import HomePage from './HomePage';
-import SearchPage from './SearchPage';
-import DictionaryDetailPage from './DictionaryDetailPage';
+import Home from './Home';
+import SearchDictionary from './SearchDictionary';
+import DetailInfo from './DetailInfo';
 
-export {HomePage, SearchPage, DictionaryDetailPage};
+export {Home, SearchDictionary, DetailInfo};

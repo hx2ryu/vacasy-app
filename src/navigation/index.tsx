@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootParamList} from './types';
-import {DictionaryDetailPage, HomePage, SearchPage} from '@components/pages';
+import {DetailInfo, Home, SearchDictionary} from '@components/pages';
 import {COLORS} from '@/constants/theme';
 import {useAppDispatch} from '@/store/hooks';
 import {loadWordbook} from '@/features/wordbook/slice';
@@ -36,19 +36,14 @@ const RootNavigator: React.FC = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Home" component={HomePage} />
-        <Stack.Screen
-          name="Search"
-          component={SearchPage}
-          options={{
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Group
+          screenOptions={{
             presentation: 'containedTransparentModal',
-          }}
-        />
-        <Stack.Screen
-          name="DictionaryDetail"
-          component={DictionaryDetailPage}
-          options={{presentation: 'transparentModal'}}
-        />
+          }}>
+          <Stack.Screen name="Search" component={SearchDictionary} />
+          <Stack.Screen name="DictionaryDetail" component={DetailInfo} />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );
