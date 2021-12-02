@@ -1,5 +1,5 @@
 import Home from './Home';
 import SearchDictionary from './SearchDictionary';
-import DetailInfo from './DetailInfo';
+import DetailInfoModal from './DetailInfoModal';
 
-export {Home, SearchDictionary, DetailInfo};
+export {Home, SearchDictionary, DetailInfoModal};

@@ -1,9 +1,7 @@
-import {WordCardProps} from '@components/molecules/WordCard';
-
 type RootParamList = {
   Home: undefined;
   Search: {wordbookKey: string};
-  DictionaryDetail: WordCardProps;
+  DetailInfo: {word: Word};
 };
 
 export type {RootParamList};

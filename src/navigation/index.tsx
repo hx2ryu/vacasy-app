@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootParamList} from './types';
-import {DetailInfo, Home, SearchDictionary} from '@components/pages';
+import {DetailInfoModal, Home, SearchDictionary} from '@components/pages';
 import {COLORS} from '@/constants/theme';
 import {useAppDispatch} from '@/store/hooks';
 import {loadWordbook} from '@/features/wordbook/slice';
@@ -42,7 +42,7 @@ const RootNavigator: React.FC = () => {
             presentation: 'containedTransparentModal',
           }}>
           <Stack.Screen name="Search" component={SearchDictionary} />
-          <Stack.Screen name="DictionaryDetail" component={DetailInfo} />
+          <Stack.Screen name="DetailInfo" component={DetailInfoModal} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

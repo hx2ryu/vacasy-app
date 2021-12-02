@@ -2,6 +2,7 @@ import {COLORS, ICONS} from '@/constants/theme';
 import {removeWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
 import {getThumbnailMeaning} from '@/utils/word';
+import {useNavigation} from '@react-navigation/core';
 import React, {useRef, useState} from 'react';
 import {
   StyleSheet,
@@ -21,6 +22,8 @@ const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
   const right = useRef(new Animated.Value(-100)).current;
   const [isShowed, setIsShowed] = useState<boolean>(false);
 
+  const navigation = useNavigation();
+
   const handleExpandMenu = () => {
     Animated.timing(right, {
       toValue: isShowed ? -70 : 20,
@@ -28,6 +31,12 @@ const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
       useNativeDriver: false,
     }).start(() => {
       setIsShowed(flag => !flag);
+    });
+  };
+
+  const handleShowDetailInfo = () => {
+    navigation.navigate('DetailInfo', {
+      word,
     });
   };
 
@@ -53,7 +62,9 @@ const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
         </View>
 
         <Animated.View style={[styles.moreMenuWrapper, {right}]}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleShowDetailInfo}>
             <Image source={ICONS.info} style={{tintColor: dotColor}} />
           </TouchableOpacity>
 
