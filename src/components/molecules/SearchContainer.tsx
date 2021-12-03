@@ -1,5 +1,5 @@
 import {COLORS, FONTS, ICONS} from '@/constants/theme';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Animated,
   Image,
@@ -24,9 +24,18 @@ const SearchContainer: React.FC<Props> = ({
   onChangeText,
   onNavigate,
 }) => {
+  const [isRemoverButtonShowed, setIsRemoverButtonShowed] =
+    useState<boolean>(false);
   const ref = useRef<TextInput>(null);
   const handleClear = () => {
     ref.current?.clear();
+    setIsRemoverButtonShowed(false);
+  };
+
+  const handleChangeText = (text: string) => {
+    onChangeText(text);
+
+    setIsRemoverButtonShowed(text !== '');
   };
 
   return (
@@ -40,12 +49,14 @@ const SearchContainer: React.FC<Props> = ({
             placeholder={'search a word.'}
             placeholderTextColor={COLORS.grayscale[400]}
             style={styles.textInput}
-            onChangeText={onChangeText}
+            onChangeText={handleChangeText}
           />
         </View>
-        <Pressable onPress={handleClear}>
-          <Image source={ICONS.close} style={styles.icon} />
-        </Pressable>
+        {isRemoverButtonShowed && (
+          <Pressable onPress={handleClear}>
+            <Image source={ICONS.close} style={styles.icon} />
+          </Pressable>
+        )}
       </View>
 
       <Pressable onPress={onNavigate} style={styles.navigationButton}>
