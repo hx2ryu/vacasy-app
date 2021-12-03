@@ -2,7 +2,7 @@ import {ICONS} from '@/constants/theme';
 import {addWord, removeWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
 import {getThumbnailMeaning} from '@/utils/word';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   TouchableOpacityProps,
   View,
@@ -13,20 +13,15 @@ import {
 import {Text} from '../atoms';
 
 interface Props extends TouchableOpacityProps {
-  content: Word;
+  item: FilteredWordInfo;
   dotColor: string;
   alreadyAdded: boolean;
 }
-const SearhResult: React.FC<Props> = ({content, dotColor, alreadyAdded}) => {
+const SearhResult: React.FC<Props> = ({item, dotColor, alreadyAdded}) => {
   const dispatch = useAppDispatch();
-  const count = useRef<number>(0);
   const handleAddWordIntoWordbook = () => {
     if (alreadyAdded === false) {
-      dispatch(
-        addWord({
-          ...content,
-        }),
-      );
+      dispatch(addWord(item));
     } else {
       // dispatch(removeWord({word: content}));
     }
@@ -38,10 +33,10 @@ const SearhResult: React.FC<Props> = ({content, dotColor, alreadyAdded}) => {
         <View style={[styles.dot, {backgroundColor: dotColor}]} />
         <View style={styles.wordWrapper}>
           <Text type={'h6'} style={styles.text}>
-            {content.word}
+            {item.word}
           </Text>
           <Text type={'blockQuote2'} style={styles.text}>
-            {getThumbnailMeaning(content)}
+            {item.thumbnailDefinition}
           </Text>
         </View>
       </View>

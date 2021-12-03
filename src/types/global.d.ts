@@ -1,14 +1,7 @@
-type Wordbook = {
-  date: string;
-  wordList: Array<Word> | undefined;
-};
-
 type Word = {
-  id: string;
   word: string;
   phonetic: string;
   phonetics: Array<Phonetic>;
-  timestamp: string;
   origin: string;
   meanings: Array<Meaning>;
 };
@@ -28,4 +21,24 @@ type Definition = {
   example: string;
   synonyms: Array<string>;
   antonyms: string;
+};
+
+type FilteredWordInfo = {
+  id?: string;
+  timestamp?: string;
+  word: string;
+  phonetic: string;
+  audio: string | undefined;
+  meanings: Array<FilteredDefinition>;
+};
+
+type FilteredDefinition = {
+  partOfSpeech: string;
+  definition: string;
+  example: string;
+};
+
+type Wordbook = {
+  date: string;
+  wordList: Array<FilteredWordInfo> | undefined;
 };

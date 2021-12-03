@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RootNavigator from '@/navigation';
 import store from '@/store';

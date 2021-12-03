@@ -3,7 +3,7 @@ import {wordBookSelector} from '@/features/wordbook/slice';
 import {useAppSelector} from '@/store/hooks';
 import {getDotColor} from '@/utils';
 import {contains} from '@/utils/word';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {FlatList, StyleSheet, View, ViewStyle} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {SearhResult} from '../molecules';
@@ -35,12 +35,11 @@ const SearchResultViewer: React.FC<Props> = ({
           style={styles.FlatList}
           data={data}
           renderItem={({item, index}) => {
-            const alreadyAdded = contains(currentWordList, item.word);
             return (
               <SearhResult
-                content={item}
+                item={item}
                 dotColor={getDotColor(index)}
-                alreadyAdded={alreadyAdded}
+                alreadyAdded={currentWordList?.some(_ => _ === item.word)!}
               />
             );
           }}

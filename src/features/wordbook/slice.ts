@@ -20,7 +20,9 @@ const wordbookSlice = createSlice({
     addWord: {
       reducer: (
         state,
-        {payload: {date, word}}: PayloadAction<{date: string; word: Word}>,
+        {
+          payload: {date, word},
+        }: PayloadAction<{date: string; word: FilteredWordInfo}>,
       ) => {
         const isNotContained =
           state.entities[date]?.wordList?.find(_ => _.word === word.word) ===
@@ -40,22 +42,25 @@ const wordbookSlice = createSlice({
           storeDataIntoStorage('WORDBOOK', updatedWordbook);
         }
       },
-      prepare: (word: Word) => {
+      prepare: (wordInfo: FilteredWordInfo) => {
         const now = new Date();
         return {
           payload: {
             date: now.toLocaleDateString(),
             word: {
-              ...word,
+              ...wordInfo,
               id: nanoid(),
               timestamp: now.toLocaleString(),
-            } as Word,
+            } as FilteredWordInfo,
           },
         };
       },
     },
-    removeWord: (state, {payload: {word}}: PayloadAction<{word: Word}>) => {
-      const date = extractOnlyDateFromLocaleString(word.timestamp);
+    removeWord: (
+      state,
+      {payload: {word}}: PayloadAction<{word: FilteredWordInfo}>,
+    ) => {
+      const date = extractOnlyDateFromLocaleString(word.timestamp!);
       if (date) {
         const wordList = state.entities[date]?.wordList?.filter(_ => {
           return _.id !== word.id;

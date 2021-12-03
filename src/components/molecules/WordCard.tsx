@@ -3,7 +3,7 @@ import {removeWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
 import {getThumbnailMeaning} from '@/utils/word';
 import {useNavigation} from '@react-navigation/core';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -13,11 +13,11 @@ import {
 } from 'react-native';
 import {Text} from '../atoms';
 
-export type WordCardProps = {
-  word: Word;
+type Props = {
+  item: FilteredWordInfo;
   dotColor: string;
 };
-const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
+const WordCard: React.FC<Props> = ({dotColor, item}) => {
   const dispatch = useAppDispatch();
   const right = useRef(new Animated.Value(-100)).current;
   const [isShowed, setIsShowed] = useState<boolean>(false);
@@ -36,17 +36,22 @@ const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
 
   const handleShowDetailInfo = () => {
     navigation.navigate('DetailInfo', {
-      word,
+      word: item,
     });
   };
 
   const handleDelete = () => {
     dispatch(
       removeWord({
-        word,
+        word: item,
       }),
     );
   };
+
+  useEffect(() => {
+    // console.log('wordcard');
+    // console.log(item);
+  });
 
   return (
     <TouchableOpacity style={styles.root} onPress={handleExpandMenu}>
@@ -54,10 +59,10 @@ const WordCard: React.FC<WordCardProps> = ({dotColor, word}) => {
         <View style={[styles.dot, {backgroundColor: dotColor}]} />
         <View style={styles.textWrapper}>
           <Text type={'h6'} style={styles.text}>
-            {word?.word}
+            {item.word}
           </Text>
           <Text type={'blockQuote2'} style={styles.text}>
-            {getThumbnailMeaning(word)}
+            {item.thumbnailDefinition}
           </Text>
         </View>
 

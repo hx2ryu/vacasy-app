@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {DEVICE_SIZE} from '@/constants/theme';
 import {WordCard} from '../molecules';
 import {getDotColor} from '@/utils';
 
 type Props = {
-  wordList: Array<Word>;
+  wordList: Array<FilteredWordInfo>;
 };
 const Wordbook: React.FC<Props> = ({wordList}) => {
   return (
@@ -13,7 +13,7 @@ const Wordbook: React.FC<Props> = ({wordList}) => {
       style={styles.list}
       data={wordList}
       renderItem={({item, index}) => (
-        <WordCard word={item} dotColor={getDotColor(index)} key={index} />
+        <WordCard item={item} dotColor={getDotColor(index)} key={index} />
       )}
     />
   );

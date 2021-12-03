@@ -34,7 +34,9 @@ const Home: React.FC<Props> = ({navigation}) => {
         e.nativeEvent.targetContentOffset.x / DEVICE_SIZE.width,
       );
 
-      setFocusedPateDate(wordbooks[pos].date);
+      if (wordbooks.length > pos) {
+        setFocusedPateDate(wordbooks[pos].date);
+      }
     }
   };
 
