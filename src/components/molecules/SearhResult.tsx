@@ -1,8 +1,7 @@
 import {ICONS} from '@/constants/theme';
-import {addWord, removeWord} from '@/features/wordbook/slice';
+import {addWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
-import {getThumbnailMeaning} from '@/utils/word';
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import {
   TouchableOpacityProps,
   View,

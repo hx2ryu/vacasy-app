@@ -1,9 +1,8 @@
 import {COLORS, ICONS} from '@/constants/theme';
 import {removeWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
-import {getThumbnailMeaning} from '@/utils/word';
 import {useNavigation} from '@react-navigation/core';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -26,7 +25,7 @@ const WordCard: React.FC<Props> = ({dotColor, item}) => {
 
   const handleExpandMenu = () => {
     Animated.timing(right, {
-      toValue: isShowed ? -70 : 20,
+      toValue: isShowed ? -100 : 20,
       duration: 700,
       useNativeDriver: false,
     }).start(() => {
@@ -47,11 +46,6 @@ const WordCard: React.FC<Props> = ({dotColor, item}) => {
       }),
     );
   };
-
-  useEffect(() => {
-    // console.log('wordcard');
-    // console.log(item);
-  });
 
   return (
     <TouchableOpacity style={styles.root} onPress={handleExpandMenu}>

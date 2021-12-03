@@ -30,6 +30,7 @@ type FilteredWordInfo = {
   phonetic: string;
   audio: string | undefined;
   meanings: Array<FilteredDefinition>;
+  thumbnailDefinition?: string;
 };
 
 type FilteredDefinition = {

@@ -39,7 +39,7 @@ const wordbookSlice = createSlice({
           adapter.setMany(state, {
             [date]: updatedWordbook,
           });
-          storeDataIntoStorage('WORDBOOK', updatedWordbook);
+          storeDataIntoStorage(date, wordList);
         }
       },
       prepare: (wordInfo: FilteredWordInfo) => {
@@ -65,14 +65,16 @@ const wordbookSlice = createSlice({
         const wordList = state.entities[date]?.wordList?.filter(_ => {
           return _.id !== word.id;
         });
+
         const updatedWordbook = {
           date,
           wordList: wordList,
         };
+
         adapter.setMany(state, {
           [date]: updatedWordbook,
         });
-        storeDataIntoStorage('WORDBOOK', updatedWordbook);
+        storeDataIntoStorage(date, wordList);
       }
     },
     loadWordbook: adapter.setOne,

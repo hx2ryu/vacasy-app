@@ -14,6 +14,7 @@ import {DateText, HorizontalScrollIndicator, MainMenuBox} from '../molecules';
 import {RootParamList} from '../../navigation/types';
 import {Wordbook} from '../organisms';
 import {DEVICE_SIZE} from '@/constants/theme';
+import {Text} from '../atoms';
 
 type Props = NativeStackScreenProps<RootParamList, 'Home'>;
 const Home: React.FC<Props> = ({navigation}) => {
@@ -69,12 +70,19 @@ const Home: React.FC<Props> = ({navigation}) => {
         scrollEnabled
         pagingEnabled
         showsHorizontalScrollIndicator={false}>
-        {wordbooks.map((item, index) => {
-          const wordList = item.wordList;
-          if (wordList) {
-            return <Wordbook key={index} wordList={wordList} />;
-          }
-        })}
+        {wordbooks.length > 0 ? (
+          wordbooks.map((item, index) => {
+            console.log(item);
+            const wordList = item.wordList;
+            if (wordList) {
+              return <Wordbook key={index} wordList={wordList} />;
+            }
+          })
+        ) : (
+          <View>
+            <Text type={'h1'}>Hello</Text>
+          </View>
+        )}
       </Animated.ScrollView>
 
       <HorizontalScrollIndicator

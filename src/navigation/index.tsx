@@ -42,7 +42,11 @@ const RootNavigator: React.FC = () => {
             presentation: 'containedTransparentModal',
           }}>
           <Stack.Screen name="Search" component={SearchDictionary} />
-          <Stack.Screen name="DetailInfo" component={DetailInfoModal} />
+          <Stack.Screen
+            name="DetailInfo"
+            component={DetailInfoModal}
+            options={{animation: 'fade'}}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

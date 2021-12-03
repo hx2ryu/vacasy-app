@@ -8,7 +8,7 @@ import {SearchContainer} from '../molecules';
 import {SearchResultViewer} from '../organisms';
 
 type Props = NativeStackScreenProps<RootParamList, 'Search'>;
-const SearchPage: React.FC<Props> = ({navigation, route}) => {
+const SearchDictionary: React.FC<Props> = ({navigation, route}) => {
   const inset = useSafeAreaInsets();
   const [keyword, setKeyword] = useState<string>('');
 
@@ -63,7 +63,7 @@ const SearchPage: React.FC<Props> = ({navigation, route}) => {
   );
 };
 
-export default SearchPage;
+export default SearchDictionary;
 
 const styles = StyleSheet.create({
   root: {

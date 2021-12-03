@@ -11,6 +11,7 @@ const ICONS = {
   'star-off': require('@assets/icons/ic_24_star_off.png'),
   leftArrow: require('@assets/icons/ic_24_arrow_left.png'),
   info: require('@assets/icons/ic_24_info.png'),
+  speaker: require('@assets/icons/ic_24_speaker.png'),
 };
 
 const COLORS = {
