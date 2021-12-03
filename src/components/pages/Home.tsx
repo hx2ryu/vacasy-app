@@ -6,6 +6,7 @@ import {
   Animated,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Pressable,
   StyleSheet,
   View,
 } from 'react-native';
@@ -83,11 +84,13 @@ const Home: React.FC<Props> = ({navigation}) => {
             }
           })
         ) : (
-          <View style={styles.emptyWrapper}>
+          <Pressable
+            style={styles.emptyWrapper}
+            onPress={handleOpenSearchModal}>
             <Text type={'h1'} style={styles.emptyText}>
-              {'Try to\nsearch a word.'}
+              {'Tab to try to search.'}
             </Text>
-          </View>
+          </Pressable>
         )}
       </Animated.ScrollView>
 
