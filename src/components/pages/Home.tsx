@@ -13,7 +13,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {DateText, HorizontalScrollIndicator, MainMenuBox} from '../molecules';
 import {RootParamList} from '../../navigation/types';
 import {Wordbook} from '../organisms';
-import {DEVICE_SIZE} from '@/constants/theme';
+import {COLORS, DEVICE_SIZE} from '@/constants/theme';
 import {Text} from '../atoms';
 
 type Props = NativeStackScreenProps<RootParamList, 'Home'>;
@@ -51,7 +51,11 @@ const Home: React.FC<Props> = ({navigation}) => {
 
   return (
     <View style={[styles.root, {marginTop: top, marginBottom: bottom}]}>
-      {focusedPageDate !== '' && <DateText dateString={focusedPageDate} />}
+      {focusedPageDate !== '' && (
+        <View>
+          <DateText dateString={focusedPageDate} />
+        </View>
+      )}
       <Animated.ScrollView
         onScrollEndDrag={handleUpdateTitle}
         onScroll={Animated.event(
@@ -79,8 +83,10 @@ const Home: React.FC<Props> = ({navigation}) => {
             }
           })
         ) : (
-          <View>
-            <Text type={'h1'}>Hello</Text>
+          <View style={styles.emptyWrapper}>
+            <Text type={'h1'} style={styles.emptyText}>
+              {'Try to\nsearch a word.'}
+            </Text>
           </View>
         )}
       </Animated.ScrollView>
@@ -110,4 +116,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
   },
+  emptyWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: DEVICE_SIZE.width - 32,
+    backgroundColor: COLORS.grayscale[100],
+    borderRadius: 20,
+  },
+  emptyText: {textAlign: 'center', color: COLORS.grayscale[300]},
 });

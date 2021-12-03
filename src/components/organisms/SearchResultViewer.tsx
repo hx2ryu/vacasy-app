@@ -38,7 +38,9 @@ const SearchResultViewer: React.FC<Props> = ({
               <SearhResult
                 item={item}
                 dotColor={getDotColor(index)}
-                alreadyAdded={currentWordList?.some(_ => _ === item.word)!}
+                alreadyAdded={
+                  currentWordList?.some(_ => _ === item.word) === true
+                }
               />
             );
           }}
