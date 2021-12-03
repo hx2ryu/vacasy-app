@@ -1,5 +1,5 @@
 import {ICONS} from '@/constants/theme';
-import {addWord} from '@/features/wordbook/slice';
+import {addWord, removeWord} from '@/features/wordbook/slice';
 import {useAppDispatch} from '@/store/hooks';
 import React from 'react';
 import {
@@ -22,7 +22,11 @@ const SearhResult: React.FC<Props> = ({item, dotColor, alreadyAdded}) => {
     if (alreadyAdded === false) {
       dispatch(addWord(item));
     } else {
-      // dispatch(removeWord({word: content}));
+      dispatch(
+        removeWord({
+          word: item,
+        }),
+      );
     }
   };
 

@@ -77,7 +77,6 @@ const Home: React.FC<Props> = ({navigation}) => {
         showsHorizontalScrollIndicator={false}>
         {wordbooks.length > 0 ? (
           wordbooks.map((item, index) => {
-            console.log(item);
             const wordList = item.wordList;
             if (wordList) {
               return <Wordbook key={index} wordList={wordList} />;

@@ -22,10 +22,6 @@ const SearchResultViewer: React.FC<Props> = ({
   const state = useAppSelector(state => state);
   const wordbook = wordBookSelector.selectById(state, focusedPageDate);
 
-  const currentWordList: Array<string> | undefined = useMemo(() => {
-    return wordbook?.wordList?.map(_ => _.word);
-  }, [wordbook]);
-
   return (
     <View
       style={[styles.root, style, {paddingTop: top, paddingBottom: bottom}]}>
@@ -34,13 +30,21 @@ const SearchResultViewer: React.FC<Props> = ({
           style={styles.FlatList}
           data={data}
           renderItem={({item, index}) => {
+            const existedItem = wordbook?.wordList?.find(
+              _ => _.thumbnailDefinition === item.thumbnailDefinition,
+            );
+            const resultItem: FilteredWordInfo = existedItem
+              ? {
+                  ...item,
+                  id: existedItem.id,
+                  timestamp: existedItem.timestamp,
+                }
+              : item;
             return (
               <SearhResult
-                item={item}
+                item={resultItem}
                 dotColor={getDotColor(index)}
-                alreadyAdded={
-                  currentWordList?.some(_ => _ === item.word) === true
-                }
+                alreadyAdded={existedItem !== undefined}
               />
             );
           }}
