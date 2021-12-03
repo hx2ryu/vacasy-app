@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: COLORS.grayscale[800],
     paddingVertical: 6,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
   },
   inputSubWrapper: {flexDirection: 'row', alignItems: 'center'},
   textInput: {
-    ...FONTS.h2,
+    ...FONTS.h6,
     color: 'white',
     marginLeft: 10,
     paddingBottom: 5,
