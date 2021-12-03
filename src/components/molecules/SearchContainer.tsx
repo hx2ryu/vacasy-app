@@ -29,7 +29,7 @@ const SearchContainer: React.FC<Props> = ({
   const ref = useRef<TextInput>(null);
   const handleClear = () => {
     ref.current?.clear();
-    setIsRemoverButtonShowed(false);
+    handleChangeText('');
   };
 
   const handleChangeText = (text: string) => {
