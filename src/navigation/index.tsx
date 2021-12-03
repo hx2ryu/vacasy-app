@@ -6,7 +6,7 @@ import {DetailInfoModal, Home, SearchDictionary} from '@components/pages';
 import {COLORS} from '@/constants/theme';
 import {useAppDispatch} from '@/store/hooks';
 import {loadWordbook} from '@/features/wordbook/slice';
-import {getDataFromStorage} from '@/storage';
+import {getAllDataFromStorage, getDataFromStorage} from '@/storage';
 
 const Theme = {
   ...DefaultTheme,
@@ -20,7 +20,8 @@ const Stack = createNativeStackNavigator<RootParamList>();
 const RootNavigator: React.FC = () => {
   const dispatch = useAppDispatch();
   const loadData = async () => {
-    const wordbook = await getDataFromStorage('WORDBOOK');
+    const wordbook = await getAllDataFromStorage();
+
     if (wordbook) {
       dispatch(loadWordbook(wordbook));
     }

@@ -11,11 +11,22 @@ export const getDataFromStorage = async (key: string) => {
   try {
     const jsonStr = await AsyncStorageLib.getItem(key);
     if (jsonStr) {
-      if (key === 'WORDBOOK') {
-        return JSON.parse(jsonStr) as Wordbook;
-      }
+      return JSON.parse(jsonStr) as Wordbook;
     }
 
     return null;
   } catch (e) {}
+};
+
+export const getAllDataFromStorage = async () => {
+  try {
+    const keys = await AsyncStorageLib.getAllKeys();
+    const items = await AsyncStorageLib.multiGet(keys);
+    return items.map(([key, value]) => {
+      return {
+        date: key,
+        wordList: JSON.parse(value!),
+      } as Wordbook;
+    });
+  } catch {}
 };
