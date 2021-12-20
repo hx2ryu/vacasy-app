@@ -14,6 +14,7 @@ module.exports = {
           '@store': './src/store',
           '@storage': './src/storage',
           '@features': './src/features',
+          '@hooks': './src/hooks',
           '@utils': './src/utils',
         },
       },
