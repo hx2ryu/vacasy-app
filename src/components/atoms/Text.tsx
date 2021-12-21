@@ -1,4 +1,4 @@
-import {FONTS, FontType} from '@/constants/theme';
+import {FONTS, FontType} from '@/theme';
 import React from 'react';
 import {Text as TextBase, TextProps} from 'react-native';
 
