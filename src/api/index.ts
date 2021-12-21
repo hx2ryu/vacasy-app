@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import Config from 'react-native-config';
+import {WordInfo, WordResponse} from './types';
 
 export const dictionaryApi = createApi({
   reducerPath: 'dictionary',
@@ -7,42 +8,21 @@ export const dictionaryApi = createApi({
     baseUrl: Config.DICTIONARY_API,
   }),
   endpoints: build => ({
-    searchWord: build.query<Array<FilteredWordInfo>, string>({
+    searchWord: build.query<Array<WordInfo>, string>({
       query: keyword => `/v2/entries/en/${keyword}`,
-      transformResponse: (response: Array<Word>) => {
-        return response.map(item => {
-          const wordInfo: FilteredWordInfo = {
-            word: '',
-            phonetic: '',
-            audio: undefined,
-            meanings: [],
-          };
-          wordInfo.word = item.word;
-
-          const phonetic = item.phonetics.find(_ => true);
-          if (phonetic) {
-            wordInfo.phonetic = phonetic.text;
-            wordInfo.audio = phonetic.audio;
-          }
-
-          item.meanings.map(meaningItem => {
-            const definition = meaningItem.definitions.find(_ => true);
-            if (definition) {
-              const meaning = {
-                partOfSpeech: meaningItem.partOfSpeech,
-                definition: definition.definition,
-                example: definition.example,
-              } as FilteredDefinition;
-
-              wordInfo.meanings.push(meaning);
-              if (!wordInfo.thumbnailDefinition) {
-                wordInfo.thumbnailDefinition = definition.definition;
-              }
+      transformResponse: (response: Array<WordResponse>) => {
+        const filteredResponse = response.filter(wordItem => {
+          if (wordItem?.meanings?.length > 0) {
+            if (wordItem.meanings[0].definitions?.length > 0) {
+              return true;
             }
-          });
-
-          return wordInfo;
+          }
         });
+        return filteredResponse.map(wordItem => ({
+          ...wordItem,
+          timestamp: new Date().toISOString(),
+          thumbnailDescription: wordItem.meanings[0].definitions[0].definition,
+        }));
       },
     }),
   }),
