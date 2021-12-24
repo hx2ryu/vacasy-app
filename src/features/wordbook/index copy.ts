@@ -18,7 +18,7 @@ const wordbookSlice = createSlice({
   name: 'wordbook',
   initialState: adapter.getInitialState(),
   reducers: {
-    wordAdded: {
+    wordbookAdded: {
       reducer: (
         state,
         {payload: {date, item}}: PayloadAction<{date: string; item: WordInfo}>,
@@ -36,51 +36,29 @@ const wordbookSlice = createSlice({
             date: now.toDateString(),
             item: {
               ...wordInfo,
+              timestamp: now.toISOString(),
               isLiked: true,
             },
           },
         };
       },
     },
-    wordRemoved: {
-      reducer: (
-        state,
-        {payload: {date, id}}: PayloadAction<{date: string; id: string}>,
-      ) => {
-        const newWordbook = state.entities[date]?.wordbook.filter(
-          _ => _.id !== id,
-        );
-        if (newWordbook) {
-          adapter.setOne(state, {date, wordbook: newWordbook});
-        } else {
-          adapter.removeOne(state, date);
-        }
-        storeDataIntoStorage(StorageKeys.wordbook, state.entities);
-      },
-      prepare: ({id, timestamp}: WordInfo) => {
-        const date = new Date(timestamp).toDateString();
-        return {
-          payload: {
-            date,
-            id,
-          },
-        };
-      },
-    },
-    wordbookRemoved: (
-      state,
-      {payload: {date}}: PayloadAction<{date: string}>,
-    ) => {
-      adapter.removeOne(state, date);
+    wordbookRemoved: (state, {payload: {id}}: PayloadAction<{id: string}>) => {
+      adapter.removeOne(state, id);
       storeDataIntoStorage(StorageKeys.wordbook, state.entities);
     },
+    wordbookAllRemoved: adapter.removeAll,
     wordbookLoaded: adapter.setAll,
   },
 });
 
 export default wordbookSlice.reducer;
-export const {wordAdded, wordRemoved, wordbookRemoved, wordbookLoaded} =
-  wordbookSlice.actions;
+export const {
+  wordbookAdded,
+  wordbookAllRemoved,
+  wordbookRemoved,
+  wordbookLoaded,
+} = wordbookSlice.actions;
 export const wordbookSelector = adapter.getSelectors<RootState>(
   state => state.wordbook,
 );

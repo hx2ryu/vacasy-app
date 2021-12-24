@@ -1,27 +1,32 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import {DEVICE_SIZE} from '@/theme';
-// import {WordCard} from '../molecules';
-import {getDotColor} from '@/utils/theme';
+import {COLORS, DEVICE_SIZE} from '@/theme';
 import {WordInfo} from '@/api/types';
 import {WordCard} from '../molecules';
+import {HomeNavigationProps} from '@/navigation/types';
 
 type Props = {
-  wordList: Array<WordInfo>;
+  data: Array<WordInfo>;
+  navigation: HomeNavigationProps;
 };
-const Wordbook: React.FC<Props> = ({wordList}) => {
+const Wordbook: React.FC<Props> = ({data, navigation}) => {
+  const handleShowDetailInfo = (selectedItem: WordInfo) => {
+    navigation.navigate('DetailInfo', {
+      data: selectedItem,
+    });
+  };
+
   return (
     <FlatList
       style={styles.list}
-      data={wordList}
+      data={data}
+      bounces={false}
       renderItem={({item, index}) => (
         <WordCard
           data={item}
           index={index}
           key={index}
-          onPress={function (data: WordInfo): void {
-            // throw new Error('Function not implemented.');
-          }}
+          onPress={handleShowDetailInfo}
         />
       )}
     />
@@ -33,5 +38,8 @@ export default Wordbook;
 const styles = StyleSheet.create({
   list: {
     width: DEVICE_SIZE.width - 32,
+    backgroundColor: COLORS.black[800],
+    borderRadius: 10,
+    marginVertical: 10,
   },
 });

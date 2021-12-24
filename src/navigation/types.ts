@@ -7,11 +7,11 @@ export type RootParamList = {
   DetailInfo: {data: WordInfo};
 };
 
+export type HomeNavigationProps = NativeStackNavigationProp<
+  RootParamList,
+  'Home'
+>;
 export type SearchNavigationProps = NativeStackNavigationProp<
   RootParamList,
   'Search'
 >;
-// export type DetailNavigationProps = NativeStackNavigationProp<
-//   RootParamList,
-//   'DetailInfo'
-// >;

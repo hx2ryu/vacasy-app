@@ -13,7 +13,7 @@ import {
 import {Text} from '../atoms';
 import {COLORS, ICONS} from '@/theme';
 import {useAppDispatch} from '@/store/hooks';
-import {wordbookAdded, wordbookRemoved} from '@/features/wordbook';
+import {wordAdded, wordRemoved} from '@/features/wordbook';
 
 type Props = {
   index: number;
@@ -38,10 +38,9 @@ const WordCard: React.FC<Props> = ({index, data, onPress}) => {
   };
   const handlePressLikeButton = () => {
     if (data.isLiked) {
-      // dispatch(wordbookRemoved(data));
+      dispatch(wordRemoved(data));
     } else {
-      if (data.timestamp && data.isLiked && data.thumbnailDescription)
-        dispatch(wordbookAdded(data));
+      dispatch(wordAdded(data));
     }
   };
 

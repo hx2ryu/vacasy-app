@@ -1,4 +1,4 @@
-import {useAnimateToShowUp, useInput} from '@/hooks';
+import {useAnimateToShowUp} from '@/hooks';
 import {COLORS, ICONS} from '@/theme';
 import React from 'react';
 import {

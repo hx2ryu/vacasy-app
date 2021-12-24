@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {COLORS, ICONS} from '@/theme';
 import {useBindScrollPos, useGetSafeAreaStyle} from '@/hooks';
 import {RootParamList} from '@/navigation/types';
@@ -9,11 +9,12 @@ import {FloatingButton} from '../atoms';
 import {DateStringText, ScrollIndicator, TouchableTextBox} from '../molecules';
 import {useAppSelector} from '@/store/hooks';
 import {wordbookSelector} from '@/features/wordbook';
+import {Wordbook} from '../organisms';
 
 type Props = NativeStackScreenProps<RootParamList, 'Home'>;
 const HomePage: React.FC<Props> = ({navigation}) => {
   const {topSafeAreaStyle, bottomSafeAreaStyle} = useGetSafeAreaStyle();
-  const {pos, handleBindScrollPos} = useBindScrollPos();
+  const {pos, pageIndex, handleBindScrollPos} = useBindScrollPos();
   const [title, setTitle] = useState<DateStringInfo>(
     getDateString(new Date().toISOString()),
   );
@@ -21,71 +22,44 @@ const HomePage: React.FC<Props> = ({navigation}) => {
   const wordbooks = useAppSelector(state => wordbookSelector.selectAll(state));
   const isEmpty = useMemo(() => wordbooks.length === 0, [wordbooks]);
 
-  const handleGotoSearchPage = () => {
+  const handleShowSearchPage = () => {
     navigation.navigate('Search');
   };
-  const handleUpdateTitle = () => {
-    // setTitle();
-  };
+  const handleUpdateTitle = useCallback(() => {
+    const date = wordbooks[pageIndex].date;
+    const dateStringInfo = getDateString(date);
+    setTitle(dateStringInfo);
+  }, [wordbooks, pageIndex]);
 
   return (
     <View style={[styles.root, topSafeAreaStyle, bottomSafeAreaStyle]}>
       <DateStringText data={title} />
-
       <Animated.ScrollView
         horizontal
+        bounces={false}
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScrollEndDrag={handleUpdateTitle}
         onScroll={handleBindScrollPos}>
-        {isEmpty && (
+        {isEmpty ? (
           <TouchableTextBox
             content={'Tab to try to search.'}
-            onPress={handleGotoSearchPage}
+            onPress={handleShowSearchPage}
           />
+        ) : (
+          wordbooks.map((item, index) => (
+            <Wordbook
+              data={item.wordbook}
+              navigation={navigation}
+              key={index}
+            />
+          ))
         )}
       </Animated.ScrollView>
-
-      {/* <Animated.ScrollView
-        onScrollEndDrag={handleUpdateTitle}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  x: scrollX,
-                },
-              },
-            },
-          ],
-          {useNativeDriver: false},
-        )}
-        horizontal
-        scrollEnabled
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}>
-        {wordbooks.length > 0 ? (
-          wordbooks.map((item, index) => {
-            const wordList = item.wordList;
-            if (wordList) {
-              return <Wordbook key={index} wordList={wordList} />;
-            }
-          })
-        ) : (
-          <Pressable
-            style={styles.emptyWrapper}
-            onPress={handleOpenSearchModal}>
-            <Text type={'h1'} style={styles.emptyText}>
-              {'Tab to try to search.'}
-            </Text>
-          </Pressable>
-        )}
-      </Animated.ScrollView> */}
-
-      <ScrollIndicator pos={pos.x} pageCount={5} />
+      <ScrollIndicator pos={pos} pageCount={wordbooks.length} />
 
       <View style={[styles.bottomMenu, bottomSafeAreaStyle]}>
-        <FloatingButton onPress={handleGotoSearchPage}>
+        <FloatingButton onPress={handleShowSearchPage}>
           <Image source={ICONS.search} style={styles.searchIcon} />
         </FloatingButton>
       </View>
@@ -102,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   bottomMenu: {
-    // bottom: 0,
+    marginBottom: 16,
   },
   searchIcon: {
     tintColor: COLORS.white[1000],

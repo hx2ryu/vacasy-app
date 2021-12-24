@@ -22,7 +22,8 @@ type Definition = {
 };
 
 export interface WordInfo extends WordResponse {
-  timestamp: string | undefined;
+  id: string;
+  timestamp: string;
   isLiked: boolean;
   thumbnailDescription: string;
 }

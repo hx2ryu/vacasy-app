@@ -1,3 +1,4 @@
+import {COLORS} from '@/theme';
 import React from 'react';
 import {
   TouchableOpacity,
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
     right: 16,
-    backgroundColor: 'black',
+    backgroundColor: COLORS.black[800],
     padding: 16,
     borderRadius: 30,
   },

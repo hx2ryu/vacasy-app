@@ -19,12 +19,17 @@ export const dictionaryApi = createApi({
           }
         });
 
-        return filteredResponse.map(wordItem => ({
-          ...wordItem,
-          isLiked: false,
-          timestamp: undefined,
-          thumbnailDescription: wordItem.meanings[0].definitions[0].definition,
-        }));
+        return filteredResponse.map(wordItem => {
+          const thumbnailDescription =
+            wordItem.meanings[0].definitions[0].definition;
+          return {
+            ...wordItem,
+            isLiked: false,
+            timestamp: new Date().toISOString(),
+            thumbnailDescription,
+            id: `${wordItem.word}-${thumbnailDescription}`,
+          };
+        });
       },
     }),
   }),

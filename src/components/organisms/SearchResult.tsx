@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSearchWordQuery} from '@/api';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import {LoadingIndicator} from '../atoms';
 import {WordCard} from '../molecules';
 import {WordInfo} from '@/api/types';
@@ -13,11 +13,11 @@ type Props = {
   navigation: SearchNavigationProps;
 };
 const SearchResult: React.FC<Props> = ({keyword, navigation}) => {
-  const {data, error, isLoading} = useSearchWordQuery(keyword);
+  const {data, isLoading} = useSearchWordQuery(keyword);
   const wordbooks = useAppSelector(state => wordbookSelector.selectAll(state));
 
-  const handleNavigateToDetailInfo = (data: WordInfo) => {
-    navigation.navigate('DetailInfo', {data});
+  const handleNavigateToDetailInfo = (selectedItem: WordInfo) => {
+    navigation.navigate('DetailInfo', {data: selectedItem});
   };
 
   return (
@@ -28,7 +28,9 @@ const SearchResult: React.FC<Props> = ({keyword, navigation}) => {
         <FlatList
           data={data}
           renderItem={({item, index}) => {
-            const isLiked = wordbooks.some(_ => _.word === item.word);
+            const isLiked = wordbooks.some(wordbookItem =>
+              wordbookItem.wordbook.some(_ => _.id === item.id),
+            );
             return (
               <WordCard
                 data={{...item, isLiked}}
@@ -45,5 +47,3 @@ const SearchResult: React.FC<Props> = ({keyword, navigation}) => {
 };
 
 export default SearchResult;
-
-const styles = StyleSheet.create({});
