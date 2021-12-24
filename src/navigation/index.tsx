@@ -2,11 +2,11 @@ import React, {useEffect} from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootParamList} from './types';
-import {DetailInfoModal, Home, SearchDictionary} from '@components/pages';
-import {COLORS} from '@/constants/theme';
+import {COLORS} from '@/theme';
+import {getDataFromStorage, StorageKeys} from '@/storage';
+import {DetailInfoPage, HomePage, SearchPage} from '@/components/pages';
 import {useAppDispatch} from '@/store/hooks';
-import {loadWordbook} from '@/features/wordbook/slice';
-import {getAllDataFromStorage, getDataFromStorage} from '@/storage';
+import {wordbookLoaded} from '@/features/wordbook';
 
 const Theme = {
   ...DefaultTheme,
@@ -19,15 +19,14 @@ const Stack = createNativeStackNavigator<RootParamList>();
 
 const RootNavigator: React.FC = () => {
   const dispatch = useAppDispatch();
-  const loadData = async () => {
-    const wordbook = await getAllDataFromStorage();
-
-    if (wordbook) {
-      dispatch(loadWordbook(wordbook));
-    }
-  };
 
   useEffect(() => {
+    const loadData = async () => {
+      const wordbook = await getDataFromStorage(StorageKeys.wordbook);
+      if (wordbook) {
+        dispatch(wordbookLoaded(wordbook));
+      }
+    };
     loadData();
   }, []);
 
@@ -37,15 +36,15 @@ const RootNavigator: React.FC = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={HomePage} />
         <Stack.Group
           screenOptions={{
             presentation: 'containedTransparentModal',
           }}>
-          <Stack.Screen name="Search" component={SearchDictionary} />
+          <Stack.Screen name="Search" component={SearchPage} />
           <Stack.Screen
             name="DetailInfo"
-            component={DetailInfoModal}
+            component={DetailInfoPage}
             options={{animation: 'fade'}}
           />
         </Stack.Group>
