@@ -1,5 +1,5 @@
 import SearchBox from './SearchBox';
 import SearchResult from './SearchResult';
-import DetailInfoCard from './DictionaryCard';
+import DetailInfoCard from './DetailInfoCard';
 
 export {SearchBox, SearchResult, DetailInfoCard};
