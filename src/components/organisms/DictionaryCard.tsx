@@ -1,4 +1,3 @@
-import {COLORS, ICONS} from '@/constants/theme';
 import React from 'react';
 import {
   Image,
@@ -8,52 +7,73 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {WordInfo} from '@/api/types';
+import {COLORS, ICONS} from '@/theme';
 import {Text} from '../atoms';
+import {getDotColor} from '@/utils/theme';
 
 type Props = {
-  item: FilteredWordInfo;
+  data: WordInfo;
   onClose: () => void;
 };
-const DetailInfoCard: React.FC<Props> = ({item, onClose}) => {
+const DetailInfoCard: React.FC<Props> = ({data, onClose}) => {
   return (
-    <View style={styles.card}>
-      <View style={styles.headerWrapper}>
+    <View style={styles.root}>
+      <View style={[styles.rowDirection, styles.headerWrapper]}>
         <Text type={'h1'} style={styles.font}>
-          {item.word}
+          {data.word}
         </Text>
         <Pressable onPress={onClose}>
           <Image source={ICONS.close} style={styles.icon} />
         </Pressable>
       </View>
-      <View style={styles.phoneticWrapper}>
-        <TouchableOpacity style={{marginRight: 6}}>
-          <Image source={ICONS.speaker} />
-        </TouchableOpacity>
 
-        <Text type={'blockQuote2'} style={styles.font}>
-          {item.phonetic}
-        </Text>
+      <View style={styles.rowDirection}>
+        {data.phonetics.map(_ => (
+          <View style={[styles.rowDirection, {marginRight: 10}]}>
+            {_.audio && (
+              <TouchableOpacity style={styles.soundButton}>
+                <Image source={ICONS.sound} />
+              </TouchableOpacity>
+            )}
+
+            <Text type={'blockQuote2'} style={styles.font}>
+              {`${_.text}`}
+            </Text>
+          </View>
+        ))}
       </View>
 
-      <ScrollView>
-        {item.meanings.map((meaningItem, index) => (
-          <View key={index} style={{flexDirection: 'row', padding: 16}}>
-            <Text type={'h6'} style={styles.index}>
-              {index + 1}
-            </Text>
-            <View>
-              <Text type={'p'} style={styles.font}>
-                {`(${meaningItem.partOfSpeech}) ${meaningItem.definition}`}
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {data.meanings.map((meaningItem, index) => (
+          <View style={styles.meaningWrapper}>
+            <View style={[styles.rowDirection]}>
+              <Text type={'p'} style={styles.partOfSpeech}>
+                {`(${meaningItem.partOfSpeech})`}
               </Text>
-              {meaningItem.example && (
-                <View style={{flexDirection: 'row'}}>
-                  <View style={styles.dot} />
-                  <Text type={'blockQuote2'} style={styles.font}>
-                    {meaningItem.example}
-                  </Text>
-                </View>
-              )}
             </View>
+
+            {meaningItem.definitions.map((_, index) => (
+              <View style={{marginBottom: 10}}>
+                <Text type={'blockQuote1'} style={styles.font}>
+                  {`${_.definition}`}
+                </Text>
+                {_?.example && (
+                  <View style={styles.rowDirection}>
+                    <View
+                      style={[
+                        styles.dot,
+                        {backgroundColor: getDotColor(index)},
+                      ]}
+                    />
+
+                    <Text type={'blockQuote2'} style={styles.font}>
+                      {_?.example}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            ))}
           </View>
         ))}
       </ScrollView>
@@ -64,7 +84,7 @@ const DetailInfoCard: React.FC<Props> = ({item, onClose}) => {
 export default DetailInfoCard;
 
 const styles = StyleSheet.create({
-  card: {
+  root: {
     position: 'absolute',
     left: 16,
     right: 16,
@@ -74,13 +94,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: COLORS.grayscale[800],
   },
-  headerWrapper: {
+  rowDirection: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginLeft: 6,
   },
-  phoneticWrapper: {flexDirection: 'row', alignItems: 'center', marginLeft: 6},
+  headerWrapper: {
+    justifyContent: 'space-between',
+  },
+  soundButton: {
+    marginRight: 6,
+  },
+  meaningWrapper: {
+    marginBottom: 10,
+  },
+  scrollContainer: {paddingHorizontal: 10, paddingTop: 16},
   dot: {
     width: 5,
     height: 5,
@@ -96,5 +123,5 @@ const styles = StyleSheet.create({
   icon: {
     tintColor: 'white',
   },
-  index: {color: COLORS.grayscale[500], marginRight: 6},
+  partOfSpeech: {color: COLORS.grayscale[500], marginRight: 6},
 });

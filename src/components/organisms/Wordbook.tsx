@@ -1,11 +1,13 @@
 import React, {useEffect} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import {DEVICE_SIZE} from '@/constants/theme';
+import {DEVICE_SIZE} from '@/theme';
+// import {WordCard} from '../molecules';
+import {getDotColor} from '@/utils/theme';
+import {WordInfo} from '@/api/types';
 import {WordCard} from '../molecules';
-import {getDotColor} from '@/utils';
 
 type Props = {
-  wordList: Array<FilteredWordInfo>;
+  wordList: Array<WordInfo>;
 };
 const Wordbook: React.FC<Props> = ({wordList}) => {
   return (
@@ -13,7 +15,14 @@ const Wordbook: React.FC<Props> = ({wordList}) => {
       style={styles.list}
       data={wordList}
       renderItem={({item, index}) => (
-        <WordCard item={item} dotColor={getDotColor(index)} key={index} />
+        <WordCard
+          data={item}
+          index={index}
+          key={index}
+          onPress={function (data: WordInfo): void {
+            // throw new Error('Function not implemented.');
+          }}
+        />
       )}
     />
   );

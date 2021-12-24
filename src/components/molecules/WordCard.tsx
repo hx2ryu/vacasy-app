@@ -1,77 +1,72 @@
-import {COLORS, ICONS} from '@/constants/theme';
-import {removeWord} from '@/features/wordbook/slice';
-import {useAppDispatch} from '@/store/hooks';
-import {useNavigation} from '@react-navigation/core';
-import React, {useRef, useState} from 'react';
+import React from 'react';
+import {WordInfo} from '@/api/types';
+import {getDotColor} from '@/utils/theme';
 import {
+  Image,
+  ImageStyle,
+  StyleProp,
   StyleSheet,
   TouchableOpacity,
-  Animated,
   View,
-  Image,
+  ViewStyle,
 } from 'react-native';
 import {Text} from '../atoms';
+import {COLORS, ICONS} from '@/theme';
+import {useAppDispatch} from '@/store/hooks';
+import {wordbookAdded, wordbookRemoved} from '@/features/wordbook';
 
 type Props = {
-  item: FilteredWordInfo;
-  dotColor: string;
+  index: number;
+  data: WordInfo;
+  onPress: (data: WordInfo) => void;
 };
-const WordCard: React.FC<Props> = ({dotColor, item}) => {
+const WordCard: React.FC<Props> = ({index, data, onPress}) => {
   const dispatch = useAppDispatch();
-  const right = useRef(new Animated.Value(-100)).current;
-  const [isShowed, setIsShowed] = useState<boolean>(false);
-
-  const navigation = useNavigation();
-
-  const handleExpandMenu = () => {
-    Animated.timing(right, {
-      toValue: isShowed ? -100 : 20,
-      duration: 700,
-      useNativeDriver: false,
-    }).start(() => {
-      setIsShowed(flag => !flag);
-    });
+  const dotStyle: StyleProp<ViewStyle> = {
+    backgroundColor: getDotColor(index),
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 16,
+  };
+  const starIconStyle: StyleProp<ImageStyle> = {
+    tintColor: data.isLiked ? COLORS.yellow : COLORS.grayscale[700],
   };
 
-  const handleShowDetailInfo = () => {
-    navigation.navigate('DetailInfo', {
-      word: item,
-    });
+  const handlePress = () => {
+    onPress(data);
   };
-
-  const handleDelete = () => {
-    dispatch(
-      removeWord({
-        word: item,
-      }),
-    );
+  const handlePressLikeButton = () => {
+    if (data.isLiked) {
+      // dispatch(wordbookRemoved(data));
+    } else {
+      if (data.timestamp && data.isLiked && data.thumbnailDescription)
+        dispatch(wordbookAdded(data));
+    }
   };
 
   return (
-    <TouchableOpacity style={styles.root} onPress={handleExpandMenu}>
-      <View style={styles.middleWrapper}>
-        <View style={[styles.dot, {backgroundColor: dotColor}]} />
+    <TouchableOpacity
+      style={[styles.root, styles.rowDirection]}
+      onPress={handlePress}>
+      <View style={styles.rowDirection}>
+        <View style={dotStyle} />
         <View style={styles.textWrapper}>
-          <Text type={'h6'} style={styles.text}>
-            {item.word}
+          <Text type={'h6'} style={styles.wordText}>
+            {data.word}
           </Text>
-          <Text type={'blockQuote2'} style={styles.text}>
-            {item.thumbnailDefinition}
+          <Text
+            type={'blockQuote2'}
+            style={styles.descriptionText}
+            ellipsizeMode="tail">
+            {data.thumbnailDescription}
           </Text>
         </View>
-
-        <Animated.View style={[styles.moreMenuWrapper, {right}]}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleShowDetailInfo}>
-            <Image source={ICONS.info} style={{tintColor: dotColor}} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button} onPress={handleDelete}>
-            <Image source={ICONS.close} style={{tintColor: dotColor}} />
-          </TouchableOpacity>
-        </Animated.View>
       </View>
+
+      <TouchableOpacity onPress={handlePressLikeButton}>
+        <Image source={ICONS.star} style={starIconStyle} />
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };
@@ -80,39 +75,23 @@ export default WordCard;
 
 const styles = StyleSheet.create({
   root: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 1,
     padding: 16,
-    borderColor: COLORS.grayscale[700],
+    borderBottomColor: COLORS.grayscale[100],
+    borderBottomWidth: 0.5,
+    maxHeight: 70,
   },
-  middleWrapper: {
+  rowDirection: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  text: {
-    color: COLORS.grayscale[700],
   },
   textWrapper: {
-    marginLeft: 16,
-    width: '70%',
+    width: '80%',
   },
-  dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+  wordText: {
+    color: COLORS.grayscale[100],
   },
-  button: {
-    marginHorizontal: 5,
-    padding: 5,
-    borderRadius: 5,
-    backgroundColor: COLORS.grayscale[200],
-  },
-  moreMenuWrapper: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    right: -10,
+  descriptionText: {
+    color: COLORS.grayscale[100],
   },
 });

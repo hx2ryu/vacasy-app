@@ -1,13 +1,13 @@
 import WordCard from './WordCard';
-import BasicNavigationBar from './BasicNavigationBar';
 import ScrollIndicator from './ScrollIndicator';
 import DateStringText from './DateStringText';
 import TouchableTextBox from './TouchableTextBox';
+import MessagePresenter from './MessagePresenter';
 
 export {
   WordCard,
-  BasicNavigationBar,
   ScrollIndicator,
   DateStringText,
   TouchableTextBox,
+  MessagePresenter,
 };

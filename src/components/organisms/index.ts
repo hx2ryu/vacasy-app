@@ -1,5 +1,5 @@
-import Wordbook from './Wordbook';
-import SearchResultViewer from './SearchResultViewer';
+import SearchBox from './SearchBox';
+import SearchResult from './SearchResult';
 import DetailInfoCard from './DictionaryCard';
 
-export {Wordbook, SearchResultViewer, DetailInfoCard};
+export {SearchBox, SearchResult, DetailInfoCard};
