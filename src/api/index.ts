@@ -18,9 +18,11 @@ export const dictionaryApi = createApi({
             }
           }
         });
+
         return filteredResponse.map(wordItem => ({
           ...wordItem,
-          timestamp: new Date().toISOString(),
+          isLiked: false,
+          timestamp: undefined,
           thumbnailDescription: wordItem.meanings[0].definitions[0].definition,
         }));
       },

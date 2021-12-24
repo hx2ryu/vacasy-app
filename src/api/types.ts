@@ -22,7 +22,7 @@ type Definition = {
 };
 
 export interface WordInfo extends WordResponse {
-  timestamp?: string;
-  isLiked?: boolean;
-  thumbnailDescription?: string;
+  timestamp: string | undefined;
+  isLiked: boolean;
+  thumbnailDescription: string;
 }
