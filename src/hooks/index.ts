@@ -1,4 +1,3 @@
-import {DEVICE_SIZE} from '@/theme';
 import {useEffect, useRef, useState} from 'react';
 import {Animated, StyleProp, ViewStyle} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -17,7 +16,6 @@ export const useGetSafeAreaStyle = () => {
 
 export const useBindScrollPos = (useNativeDriver: boolean = false) => {
   const pos = useRef(new Animated.Value(0)).current;
-  const [pageIndex, setPageIndex] = useState<number>(0);
   const handleBindScrollPos = Animated.event(
     [
       {
@@ -31,13 +29,7 @@ export const useBindScrollPos = (useNativeDriver: boolean = false) => {
     {useNativeDriver},
   );
 
-  useEffect(() => {
-    pos.addListener(({value}) => {
-      const index = Math.ceil(value / DEVICE_SIZE.width);
-      setPageIndex(index);
-    });
-  }, [pos]);
-  return {pos, pageIndex, handleBindScrollPos};
+  return {pos, handleBindScrollPos};
 };
 
 type Direction = 'from-left' | 'from-right' | 'from-top' | 'from-bottom';
