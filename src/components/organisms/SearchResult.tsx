@@ -34,6 +34,7 @@ const SearchResult: React.FC<Props> = ({keyword, navigation}) => {
             return (
               <WordCard
                 data={{...item, isLiked}}
+                themeType="light"
                 index={index}
                 key={index}
                 onPress={handleNavigateToDetailInfo}

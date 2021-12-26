@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import {COLORS, DEVICE_SIZE} from '@/theme';
+import {DEVICE_SIZE} from '@/theme';
 import {WordInfo} from '@/api/types';
 import {WordCard} from '../molecules';
 import {HomeNavigationProps} from '@/navigation/types';
@@ -23,6 +23,7 @@ const Wordbook: React.FC<Props> = ({data, navigation}) => {
       bounces={false}
       renderItem={({item, index}) => (
         <WordCard
+          themeType="dark"
           data={item}
           index={index}
           key={index}
@@ -38,7 +39,6 @@ export default Wordbook;
 const styles = StyleSheet.create({
   list: {
     width: DEVICE_SIZE.width - 32,
-    backgroundColor: COLORS.black[800],
     borderRadius: 10,
     marginVertical: 10,
   },
