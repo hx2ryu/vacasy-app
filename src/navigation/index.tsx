@@ -28,7 +28,7 @@ const RootNavigator: React.FC = () => {
       }
     };
     loadData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <NavigationContainer theme={Theme}>
