@@ -6,6 +6,7 @@ import {
 import {WordInfo} from '@/api/types';
 import {RootState} from '@/store';
 import {StorageKeys, storeDataIntoStorage} from '@/storage';
+import {compareISOString} from '@/utils/date';
 
 type WordbookState = {
   date: string;
@@ -13,6 +14,7 @@ type WordbookState = {
 };
 const adapter = createEntityAdapter<WordbookState>({
   selectId: state => state.date,
+  sortComparer: (a, b) => compareISOString(a.date, b.date),
 });
 const wordbookSlice = createSlice({
   name: 'wordbook',
@@ -23,14 +25,16 @@ const wordbookSlice = createSlice({
         state,
         {payload: {date, item}}: PayloadAction<{date: string; item: WordInfo}>,
       ) => {
-        const olbWordbook = state.entities[date];
-        const newWordbook = olbWordbook
-          ? olbWordbook.wordbook.concat(item)
+        const oldWordbook = state.entities[date];
+        const newWordbook = oldWordbook
+          ? oldWordbook.wordbook.concat(item)
           : [item];
         adapter.setOne(state, {date, wordbook: newWordbook});
+        storeDataIntoStorage(StorageKeys.wordbook, state.entities);
       },
       prepare: (wordInfo: WordInfo) => {
         const now = new Date();
+        console.log(now.toLocaleDateString());
         return {
           payload: {
             date: now.toDateString(),
@@ -51,11 +55,13 @@ const wordbookSlice = createSlice({
           _ => _.id !== id,
         );
         if (newWordbook) {
-          adapter.setOne(state, {date, wordbook: newWordbook});
-        } else {
-          adapter.removeOne(state, date);
+          if (newWordbook.length === 0) {
+            adapter.removeOne(state, date);
+          } else {
+            adapter.setOne(state, {date, wordbook: newWordbook});
+          }
+          storeDataIntoStorage(StorageKeys.wordbook, state.entities);
         }
-        storeDataIntoStorage(StorageKeys.wordbook, state.entities);
       },
       prepare: ({id, timestamp}: WordInfo) => {
         const date = new Date(timestamp).toDateString();
