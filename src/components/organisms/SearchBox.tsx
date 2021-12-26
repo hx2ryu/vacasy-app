@@ -52,7 +52,7 @@ const SearchBox: React.FC<Props> = ({
 
       <Animated.View style={{right: pos}}>
         <TouchableOpacity onPress={onPressCancel}>
-          <Text type={'h4'} style={styles.cancelText}>
+          <Text type={'h5'} style={styles.cancelText}>
             Cancel
           </Text>
         </TouchableOpacity>
@@ -71,8 +71,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: COLORS.black[500],
     borderRadius: 10,
-    width: '80%',
-    padding: 16,
+    width: '82%',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
   },
   rowDirection: {
     flexDirection: 'row',

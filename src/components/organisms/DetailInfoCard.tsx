@@ -29,46 +29,48 @@ const DetailInfoCard: React.FC<Props> = ({data, onClose}) => {
       </View>
 
       <View style={styles.rowDirection}>
-        {data.phonetics.map(_ => (
-          <View style={[styles.rowDirection, {marginRight: 10}]}>
-            {_.audio && (
+        {data.phonetics.map((phoneticItem, pIndex) => (
+          <View
+            style={[styles.rowDirection, styles.phoneticWrapper]}
+            key={pIndex}>
+            {phoneticItem.audio && (
               <TouchableOpacity style={styles.soundButton}>
                 <Image source={ICONS.sound} />
               </TouchableOpacity>
             )}
 
             <Text type={'blockQuote2'} style={styles.font}>
-              {`${_.text}`}
+              {`${phoneticItem.text}`}
             </Text>
           </View>
         ))}
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {data.meanings.map((meaningItem, index) => (
-          <View style={styles.meaningWrapper}>
+        {data.meanings.map((meaningItem, mIndex) => (
+          <View style={styles.meaningWrapper} key={mIndex}>
             <View style={[styles.rowDirection]}>
               <Text type={'p'} style={styles.partOfSpeech}>
                 {`(${meaningItem.partOfSpeech})`}
               </Text>
             </View>
 
-            {meaningItem.definitions.map((_, index) => (
-              <View style={{marginBottom: 10}}>
+            {meaningItem.definitions.map((definitionItem, dIndex) => (
+              <View style={styles.definitionWrapper} key={dIndex}>
                 <Text type={'blockQuote1'} style={styles.font}>
-                  {`${_.definition}`}
+                  {`${definitionItem.definition}`}
                 </Text>
-                {_?.example && (
+                {definitionItem?.example && (
                   <View style={styles.rowDirection}>
                     <View
                       style={[
                         styles.dot,
-                        {backgroundColor: getDotColor(index)},
+                        {backgroundColor: getDotColor(dIndex)},
                       ]}
                     />
 
                     <Text type={'blockQuote2'} style={styles.font}>
-                      {_?.example}
+                      {definitionItem?.example}
                     </Text>
                   </View>
                 )}
@@ -124,4 +126,6 @@ const styles = StyleSheet.create({
     tintColor: 'white',
   },
   partOfSpeech: {color: COLORS.grayscale[500], marginRight: 6},
+  phoneticWrapper: {marginRight: 10},
+  definitionWrapper: {marginBottom: 10},
 });
